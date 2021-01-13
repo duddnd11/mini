@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<security:http>
+		<security:intercept-url pattern="/" access="permitAll"/>
+		<security:intercept-url pattern="/" access="hasRole('ROLE_MEMBER')"/>
+		<!-- <security:intercept-url pattern="/" access="hasRole('ROLE_ADMIN')"/> -->
+		<security:form-login login-page="/login2" username-parameter="id"
+							 login-processing-url="/login-processing" 
+							 default-target-url="/main"/>
+							 
+		<security:logout invalidate-session="true" logout-url="/logout2" logout-success-url="/main" delete-cookies="JSESSIONID"/>
+		
+		<!-- 세션 한개만 
+		-->
+		<security:session-management>
+			<security:concurrency-control max-sessions="1"
+									expired-url="/login2"
+									error-if-maximum-exceeded="true"/>
+		</security:session-management>
+	</security:http>
+	
+	<!-- 로그인 진행시 비밀번호를 비교할 서비스 클래스-->
+	<security:authentication-manager>	
+		<security:authentication-provider user-service-ref="customUserService">
+			<security:password-encoder hash="bcrypt"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<context:component-scan base-package="com.yw.security"/>
+	<bean id="customUserService" class="com.yw.security.CustomUserDetailService" />
+</beans>
