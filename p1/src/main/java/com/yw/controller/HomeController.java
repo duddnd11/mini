@@ -66,6 +66,16 @@ public class HomeController {
 		return "redirect:/main";
 	}
 	**/
+	
+	@RequestMapping(value="myPage")
+	public String myPage() {
+		return "myPage";
+	}
+	
+	@RequestMapping(value="createTeam")
+	public String createTeam() {
+		return "createTeam";
+	}
 }
 
 

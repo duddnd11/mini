@@ -4,23 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <link href="resources/userCss.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>로그인</title>
 <style>
-	.loginContainer{
-		width : 300px;
-		margin : 0 auto;
-	}
-	input{
-		font-size:24px;
-	}
-	h3{
-		margin-bottom:5px;
-	}
+	
 </style>
 </head>
 <body>
-	<div class="loginContainer">
+	<div class="userContainer">
 		<h1>로그인</h1>
 		<form action="login-processing" method="post">
 			<div>

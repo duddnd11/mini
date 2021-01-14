@@ -4,23 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+     <link href="resources/userCss.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>회원가입</title>
 <style>
-	.sigUpContainer{
-		width : 300px;
-		margin : 0 auto;
-	}
-	input{
-		font-size:24px;
-	}
-	h3{
-		margin-bottom:5px;
-	}
+	
 </style>
 </head>
 <body>
-		<div class="sigUpContainer">
+		<div class="userContainer">
 			<h1>회원가입</h1>
 			<form action="signUpAction" method="post">
 				<div>

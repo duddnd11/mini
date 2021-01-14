@@ -50,7 +50,7 @@
 					<li><a href="signUp">회원가입</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<sec:authentication property="principal.username"/>
+					<p class="userName"><sec:authentication property="principal.username" var="userId"/></p>
 					<li><a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a><li>
 					<form action="logout2" id="logoutForm" style="display:inline;" method="post" >
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
