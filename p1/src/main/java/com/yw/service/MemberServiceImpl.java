@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService{
 	BCryptPasswordEncoder bCryptPasswordEncoder; 
 	
 	@Override
-	public void insertMemberAction(MemberVo vo) {
+	public void insertMemberService(MemberVo vo) {
 		String encodedPassword = bCryptPasswordEncoder.encode(vo.getPassword());
 		vo.setPassword(encodedPassword);
 		dao.insertMember(vo);

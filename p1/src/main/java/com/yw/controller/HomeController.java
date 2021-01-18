@@ -53,7 +53,7 @@ public class HomeController {
 		String birth=year+month+day;
 		vo.setBirth(birth);
 		System.out.println(vo.toString());
-		memberService.insertMemberAction(vo);
+		memberService.insertMemberService(vo);
 		return "main";
 	}
 	/**
@@ -71,11 +71,12 @@ public class HomeController {
 	public String myPage() {
 		return "myPage";
 	}
-	
-	@RequestMapping(value="createTeam")
-	public String createTeam() {
-		return "createTeam";
+
+	@RequestMapping(value="modal")
+	public String modal() {
+		return "modal";
 	}
+	
 }
 
 

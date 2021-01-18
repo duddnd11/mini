@@ -14,28 +14,18 @@
 <link href="resources/mainCss.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
-<title>매치</title>
-<style>
-	.match{
-		height:90px;
-	}
-
-</style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-	<a href="newMatch?category=${category}">매치작성</a>
 	<div class="container">
-		<c:forEach items="${matchList}" var="matchList">
-			<a href="matchDetail?mbno=${matchList.mbno}">
-				<div class="match">
-						${matchList.addr}
-						${matchList.date}
-						${matchList.cost}
-						${matchList.rule}
-						${matchList.state}
-				</div>
-			</a>
-		</c:forEach>
+		${matchDetail.addr}
+		${matchDetail.rule}
+		${matchDetail.date}
+		${matchDetail.contents}
+		${matchDetail.state}
+		<input type="button" value="매치 신청"/>
 	</div>
+	
 </body>
 </html>

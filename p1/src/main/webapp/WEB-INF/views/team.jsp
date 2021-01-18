@@ -16,23 +16,22 @@
 <meta charset="UTF-8">
 <title>매치</title>
 <style>
-	.match{
+	.team{
 		height:90px;
 	}
-
 </style>
 </head>
 <body>
-	<a href="newMatch?category=${category}">매치작성</a>
 	<div class="container">
-		<c:forEach items="${matchList}" var="matchList">
-			<a href="matchDetail?mbno=${matchList.mbno}">
-				<div class="match">
-						${matchList.addr}
-						${matchList.date}
-						${matchList.cost}
-						${matchList.rule}
-						${matchList.state}
+		<c:forEach items="${teamList}" var="teamList">
+			<a href="teamDetail?mbno=${teamList.teamno}">
+				<div class="team">
+						${teamList.name}
+						${teamList.members}
+						${teamList.sport}
+						${teamList.addr}
+						${teamList.gender}
+						${teamList.representative}
 				</div>
 			</a>
 		</c:forEach>

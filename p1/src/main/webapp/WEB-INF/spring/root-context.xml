@@ -29,6 +29,7 @@
 	
 	<bean id="memberDao" class="com.yw.dao.MemberDaoImpl"/>
 	<bean id="teamDao" class="com.yw.dao.TeamDaoImpl"/>
+	<bean id="matchDao" class="com.yw.dao.MatchDaoImpl"/>
 	<context:component-scan base-package="com.yw.service"/>
 	
 </beans>

@@ -65,8 +65,8 @@
 				<h1 class="logo"><a href="main">로고</a></h1>
 			</div>
 				<ul class="menuUl">
-					<li><a href="match">매치</a></li>
-					<li><a href="mercenary">용병 모집</a></li>
+					<li><a href="match?category=매치">매치</a></li>
+					<li><a href="match?category=용병">용병 모집</a></li>
 					<li><a href="team">팀</a></li>
 				</ul>
 		</nav>

@@ -7,4 +7,7 @@
  	<insert id="createTeam">
  		INSERT INTO team(name,members,sport,addr,gender,introduce,representative) VALUES(#{name},#{members},#{sport},#{addr},#{gender},#{introduce},#{representative});
  	</insert>
+ 	<select id="teamList" resultType="com.yw.vo.TeamVo">
+ 		SELECT * FROM team;
+ 	</select>
  </mapper>

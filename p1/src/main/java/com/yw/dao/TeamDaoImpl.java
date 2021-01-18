@@ -1,5 +1,7 @@
 package com.yw.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,5 +14,10 @@ public class TeamDaoImpl implements TeamDao{
 	@Override
 	public void createTeam(TeamVo vo) {
 		sqlSession.insert("com.yw.mapper.TeamMapper.createTeam",vo);
+	}
+
+	@Override
+	public List<TeamVo> teamList() {
+		return sqlSession.selectList("com.yw.mapper.TeamMapper.teamList");
 	}
 }
