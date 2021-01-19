@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link href="resources/userCss.css" rel="stylesheet">
+
 <meta charset="UTF-8">
 <title>로그인</title>
 <style>

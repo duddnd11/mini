@@ -5,21 +5,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link href="resources/mainCss.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>매치</title>
 <style>
 	.match{
 		height:90px;
 	}
-
+	.rigth-section{
+		display: inline;
+		float:right;
+	}
+	.left-section{
+		display: inline;
+	}
 </style>
 </head>
 <body>
@@ -28,11 +26,15 @@
 		<c:forEach items="${matchList}" var="matchList">
 			<a href="matchDetail?mbno=${matchList.mbno}">
 				<div class="match">
-						${matchList.addr}
+					<div class="left-section">
 						${matchList.date}
-						${matchList.cost}
 						${matchList.rule}
+						${matchList.addr}
+					</div>
+					<div class="rigth-section">
 						${matchList.state}
+						${matchList.cost}
+					</div>
 				</div>
 			</a>
 		</c:forEach>

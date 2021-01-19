@@ -77,6 +77,10 @@ public class HomeController {
 		return "modal";
 	}
 	
+	@RequestMapping(value="map")
+	public String map() {
+		return "map";
+	}
 }
 
 

@@ -4,20 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link href="resources/mainCss.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -110,10 +96,22 @@
 <body>
 	<div class="container">
 		<h3>매치 작성</h3>
-		<form action="newMatchAction" method="post">
+		<form action="newMatchAction" 
+		method="post">
 			<div>
 				<p>경기장</p>
-				<input type="text" name="addr"/>
+				<input type="text" id="addr" name="addr"/>
+				<input type="text" id="place"/>
+				<input type="button" value="장소 검색" data-toggle="modal" data-target="#placeModal"/>
+				<div id="placeModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">
+								<%@include file="map.jsp" %>
+							</div>						
+						</div>
+					</div>
+				</div>
 			</div>
 			<div>
 				<p>참가비</p>
@@ -172,7 +170,7 @@
 				<p>내용</p>
 				<textarea rows="" cols="" name="contents"></textarea>
 			</div>
-			<input type="submit" value="작성" />
+			<input type="submit" value="작성" formaction="newMatchAction" />
 			<input type="hidden" name="category" value="${category}"/>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form>
