@@ -183,8 +183,8 @@ function displayPlaces(places) {
 }
 
 function addrValue(name,address){
-	$("#addr").val(name);
-	$("#place").val(address);
+	$("#place").val(name);
+	$("#addr").val(address);
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다

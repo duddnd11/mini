@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -21,10 +27,48 @@
 	background-color: black;
 	color: white;
 }
+
+.swiper-container {
+	width: 130px;
+	height: 150px;
+	float: left;
+}
+
+.start-time {
+	width: 270px;
+	height: 150px;
+	display: inline-block;
+}
+
+.end-time {
+	width: 270px;
+	height: 150px;
+	display: inline-block;
+}
 </style>
 <script type="text/javascript">
 	var today = new Date(); // 오늘 날짜
 	var date = new Date();
+
+	$(function() {
+		$(".day").click(
+				function() {
+					matchDay = today.getFullYear() + "/"
+							+ (today.getMonth() + 1) + "/" + $(this).text();
+					$(this).removeClass("day");
+					$(this).addClass("clicked");
+				});
+
+		$(".confirm").click(function(){
+				var startHour = $("#start-hour").find("div.swiper-slide-active").text().slice(0,2);
+				var startMin= $("#start-min").find("div.swiper-slide-active").text().slice(0,2);
+				var endHour = $("#end-hour").find("div.swiper-slide-active").text().slice(0,2);
+				var endMin= $("#end-min").find("div.swiper-slide-active").text().slice(0,2);
+
+				var matchTime=startHour+":"+startMin+"~"+endHour+":"+endMin;
+				$("#date").val(matchDay+" "+matchTime);
+			});
+	});
 
 	function prevCalendar() {
 		today = new Date(today.getFullYear(), today.getMonth() - 1, today
@@ -84,31 +128,34 @@
 			}
 		}
 	}
-	$(function() {
-		$(".day").click(function() {
 
-		});
-	});
-
-	
+	var matchDay;
+	var matchTime;
+	/**
+	function dayClick(){
+			matchDay=today.getFullYear()+"/"+(today.getMonth()+1)+"/"+$(this).text();
+			alert(matchDay);
+			$(this).removeClass("day");
+			$(this).addClass("clicked");
+		}
+	 **/
 </script>
 </head>
 <body>
 	<div class="container">
 		<h3>매치 작성</h3>
-		<form action="newMatchAction" 
-		method="post">
+		<form action="newMatchAction" method="post">
 			<div>
 				<p>경기장</p>
-				<input type="text" id="addr" name="addr"/>
-				<input type="text" id="place"/>
-				<input type="button" value="장소 검색" data-toggle="modal" data-target="#placeModal"/>
+				<input type="text" id="place" name="place"/> 
+				<input type="hidden" id="addr" name="addr" /> 
+				<input type="button" value="장소 검색" data-toggle="modal" data-target="#placeModal" />
 				<div id="placeModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-body">
-								<%@include file="map.jsp" %>
-							</div>						
+								<%@include file="map.jsp"%>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -119,14 +166,14 @@
 			</div>
 			<div>
 				<p>실력</p>
-				<input type="radio" name="skill" value="상"/>상 <input type="radio"
-					name="skill" value="중"/>중 <input type="radio" name="skill" value="하"/>하
+				<input type="radio" name="skill" value="상" />상 <input type="radio"
+					name="skill" value="중" />중 <input type="radio" name="skill"
+					value="하" />하
 			</div>
 			<div>
 				<p>경기시간</p>
-				<input type="date" name="date"/>
-				<input type="button" value="날짜 및 시간 선택" data-toggle="modal"
-					data-target="#calendarModal" />
+				<input type="text" name="date" id="date"/> <input type="button"
+					value="날짜 및 시간 선택" data-toggle="modal" data-target="#calendarModal" />
 				<div id="calendarModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -150,7 +197,120 @@
 								</table>
 								<script language="javascript" type="text/javascript">
 									buildCalendar();//
-									
+								</script>
+								<div class="time-container">
+									<div class="start-time">
+										<div class="swiper-container">
+											<!-- Additional required wrapper -->
+											<div class="swiper-wrapper" id="start-hour">
+												<!-- Slides -->
+												<c:forEach var="i" begin="0" end="23">
+													<c:choose>
+													<c:when test="${i<10}">
+													<div class="swiper-slide">0${i}시</div>
+													</c:when>
+													<c:otherwise>
+													<div class="swiper-slide">${i}시</div>
+													</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</div>
+											<!-- If we need navigation buttons -->
+											<div class="swiper-button-prev"></div>
+											<div class="swiper-button-next"></div>
+										</div>
+										<div class="swiper-container" id="start-min">
+											<!-- Additional required wrapper -->
+											<div class="swiper-wrapper">
+												<!-- Slides -->
+												<c:forEach var="i" begin="0" end="60" step="10">
+													<c:choose>
+													<c:when test="${i<10}">
+													<div class="swiper-slide">0${i}분</div>
+													</c:when>
+													<c:otherwise>
+													<div class="swiper-slide">${i}분</div>
+													</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</div>
+
+											<!-- If we need navigation buttons -->
+											<div class="swiper-button-prev"></div>
+											<div class="swiper-button-next"></div>
+										</div>
+									</div>
+									<div class="end-time">
+										<div class="swiper-container">
+											<!-- Additional required wrapper -->
+											<div class="swiper-wrapper" id="end-hour">
+												<!-- Slides -->
+												<c:forEach var="i" begin="0" end="23">
+													<c:choose>
+													<c:when test="${i<10}">
+													<div class="swiper-slide">0${i}시</div>
+													</c:when>
+													<c:otherwise>
+													<div class="swiper-slide">${i}시</div>
+													</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</div>
+
+											<!-- If we need navigation buttons -->
+											<div class="swiper-button-prev"></div>
+											<div class="swiper-button-next"></div>
+										</div>
+										<div class="swiper-container">
+											<!-- Additional required wrapper -->
+											<div class="swiper-wrapper" id="end-min">
+												<!-- Slides -->
+												<c:forEach var="i" begin="0" end="60" step="10">
+													<c:choose>
+													<c:when test="${i<10}">
+													<div class="swiper-slide">0${i}분</div>
+													</c:when>
+													<c:otherwise>
+													<div class="swiper-slide">${i}분</div>
+													</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</div>
+
+											<!-- If we need navigation buttons -->
+											<div class="swiper-button-prev"></div>
+											<div class="swiper-button-next"></div>
+										</div>
+									</div>
+								</div>
+								<div class="confirm-container">
+									<button type="button" class="confirm" data-dismiss="modal">선택</button>
+									<button type="button" class="cancle" data-dismiss="modal">취소</button>
+								</div>
+								<script type="text/javascript">
+										var mySwiper = new Swiper(
+												'.swiper-container',
+												{
+													// Optional parameters
+													direction : 'vertical',
+													loop : true,
+
+													// If we need pagination
+													pagination : {
+														el : '.swiper-pagination',
+													},
+
+													// Navigation arrows
+													navigation : {
+														nextEl : '.swiper-button-next',
+														prevEl : '.swiper-button-prev',
+													},
+
+													// And if we need scrollbar
+													scrollbar : {
+														el : '.swiper-scrollbar',
+													},
+												})
 								</script>
 							</div>
 						</div>
@@ -164,16 +324,22 @@
 					<option value="4vs4">4vs4</option>
 					<option value="5vs5">5vs5</option>
 					<option value="6vs6">6vs6</option>
+					<option value="6vs6">7vs7</option>
+					<option value="6vs6">8vs8</option>
+					<option value="6vs6">9vs9</option>
+					<option value="6vs6">10vs10</option>
+					<option value="6vs6">11vs11</option>
 				</select>
 			</div>
 			<div>
 				<p>내용</p>
 				<textarea rows="" cols="" name="contents"></textarea>
 			</div>
-			<input type="submit" value="작성" formaction="newMatchAction" />
-			<input type="hidden" name="category" value="${category}"/>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<input type="submit" value="작성" formaction="newMatchAction" /> 
+			<input type="hidden" name="category" value="${category}" /> 
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 	</div>
+
 </body>
 </html>

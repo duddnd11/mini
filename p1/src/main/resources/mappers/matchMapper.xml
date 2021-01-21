@@ -5,7 +5,7 @@
   
  <mapper namespace="com.yw.mapper.MatchMapper">
  	<insert id="newMatch">
- 		INSERT INTO matchboard(title,date,addr,cost,rule,contents,category) VALUES(#{title},#{date},#{addr},#{cost},#{rule},#{contents},#{category});
+ 		INSERT INTO matchboard(title,date,time,addr,place,cost,rule,contents,category,skill) VALUES(#{title},#{date},#{time},#{addr},#{place},#{cost},#{rule},#{contents},#{category},#{skill});
  	</insert>
  	
  	<select id="matchList" resultType="com.yw.vo.MatchBoardVo">
