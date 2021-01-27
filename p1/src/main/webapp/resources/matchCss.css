@@ -1,0 +1,70 @@
+@charset "EUC-KR";
+
+.match {
+	height: 90px;
+}
+
+.right-section {
+	display: inline-block;
+	float: right;
+}
+
+.left-section {
+	display: inline-block;
+}
+
+.left-box {
+	display: inline-block;
+}
+
+.right-box {
+	display: inline-block;
+	border-radius: 6px;
+	margin-left: 20px;
+}
+
+.place {
+	font-size: 15px;
+}
+
+.status {
+	border-radius: 6px;
+	background-color: rgb(49, 91, 174);
+	width: 80px;
+	height: 45px;
+	text-align: center;
+}
+
+.status-complete{
+	border-radius: 6px;
+	background-color: rgb(154, 154, 154);
+	width: 80px;
+	height: 45px;
+	text-align: center;
+}
+.status-success{
+	border-radius: 6px;
+	background-color: rgb(121, 217, 134);
+	width: 80px;
+	height: 45px;
+	text-align: center;
+}
+.status-fail{
+	border-radius: 6px;
+	background-color: rgb(237, 123, 133);
+	width: 80px;
+	height: 45px;
+	text-align: center;
+}
+.status-text {
+	color: white;
+}
+
+.date-span {
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.skill-span {
+	margin-left: 16px;
+}

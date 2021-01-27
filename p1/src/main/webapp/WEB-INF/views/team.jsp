@@ -13,6 +13,9 @@
 </style>
 </head>
 <body>
+	<div>
+		<a href="createTeam">팀등록</a>
+	</div>
 	<div class="container">
 		<c:forEach items="${teamList}" var="teamList">
 			<a href="teamDetail?mbno=${teamList.teamno}">

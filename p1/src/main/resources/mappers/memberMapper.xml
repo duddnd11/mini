@@ -11,4 +11,46 @@
  	<select id="getUserById" parameterType="String" resultType="com.yw.security.CustomUserDetail">
  		SELECT * FROM member WHERE id=#{id};
  	</select>
+ 	
+ 	<select id="myMatch" resultType="com.yw.vo.MatchBoardVo">
+ 		SELECT * FROM matchboard WHERE id=#{id} AND category='매치';
+ 	</select>
+ 	
+ 	<select id="myMercenary" resultType="com.yw.vo.MatchBoardVo">
+ 		SELECT * FROM matchboard WHERE id=#{id} AND category='용병';
+ 	</select>
+ 	
+ 	<resultMap type="com.yw.vo.ApplyVo" id="ApplyVo">
+ 		<result column="applyno" property="applyno"/>
+ 		<result column="mbno" property="mbno"/>
+ 		<result column="id" property="id"/>
+ 		<result column="apply_state" property="state"/>
+ 		<result column="teamname" property="teamname"/>
+ 	</resultMap>
+ 
+ 	<resultMap type="com.yw.vo.MatchBoardVo" id="MatchBoardVo">
+ 		<result column="mbno" property="mbno"/>
+ 		<result column="title" property="title"/>
+ 		<result column="date" property="date"/>
+ 		<result column="time" property="time"/>
+ 		<result column="addr" property="addr"/>
+ 		<result column="place" property="place"/>
+ 		<result column="cost" property="cost"/>
+ 		<result column="rule" property="rule"/>
+ 		<result column="contents" property="contents"/>
+ 		<result column="hitcount" property="hitcount"/>
+ 		<result column="state" property="state"/>
+ 		<result column="category" property="category"/>
+ 		<result column="skill" property="skill"/>
+ 		<result column="id" property="id"/>
+ 		<collection property="applyVo" resultMap="ApplyVo"></collection>
+ 	</resultMap>
+ 	
+ 	<select id="myMatchApply" resultMap="MatchBoardVo" parameterType="com.yw.vo.MatchBoardVo" >
+ 		SELECT matchboard.*,apply.state as apply_state,apply.teamname FROM matchboard,apply WHERE matchboard.mbno=apply.mbno AND category='매치' AND apply.id=#{id};
+ 	</select>
+ 	
+ 	<select id="myMercenaryApply" resultMap="MatchBoardVo" parameterType="com.yw.vo.MatchBoardVo">
+ 		SELECT matchboard.*,apply.state as apply_state FROM matchboard,apply WHERE matchboard.mbno=apply.mbno AND category='용병' AND apply.id=#{id};
+ 	</select>
  </mapper>

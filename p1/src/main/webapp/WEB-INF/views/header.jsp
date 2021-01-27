@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <!-- 부가적인 테마 -->
 <link rel="stylesheet"
@@ -60,7 +61,11 @@ ul {
 }
 
 .menuUl>li {
-	font-size: 30px;
+	font-size: 23px;
+	margin-right : 13px;
+}
+.userUl>li{
+	margin-right :5px;
 }
 
 a {
@@ -110,9 +115,9 @@ a:hover {
 		</nav>
 		<nav class="menuNav">
 			<div class="logoDiv">
-				<h1 class="logo">
+				<h2 class="logo">
 					<a href="main">로고</a>
-				</h1>
+				</h2>
 			</div>
 			<ul class="menuUl">
 				<li><a href="match?category=매치">매치</a></li>

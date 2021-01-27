@@ -27,4 +27,9 @@ public class MatchServiceImpl implements MatchService{
 	public MatchBoardVo matchDetailService(int mbno) {
 		return dao.matchDetail(mbno);
 	}
+
+	@Override
+	public void updateStateService(int mbno) {
+		dao.updateState(mbno);
+	}
 }

@@ -5,7 +5,7 @@
   
  <mapper namespace="com.yw.mapper.MatchMapper">
  	<insert id="newMatch">
- 		INSERT INTO matchboard(title,date,time,addr,place,cost,rule,contents,category,skill) VALUES(#{title},#{date},#{time},#{addr},#{place},#{cost},#{rule},#{contents},#{category},#{skill});
+ 		INSERT INTO matchboard(title,date,time,addr,place,cost,rule,contents,category,skill,id) VALUES(#{title},#{date},#{time},#{addr},#{place},#{cost},#{rule},#{contents},#{category},#{skill},#{id});
  	</insert>
  	
  	<select id="matchList" resultType="com.yw.vo.MatchBoardVo">
@@ -15,4 +15,8 @@
  	<select id="matchDetail" resultType="com.yw.vo.MatchBoardVo">
  		SELECT * FROM matchboard WHERE mbno=#{mbno};
  	</select>
+ 	
+ 	<update id="updateState">
+ 		UPDATE matchboard SET state='모집완료' WHERE mbno=#{mbno};
+ 	</update>
  </mapper>

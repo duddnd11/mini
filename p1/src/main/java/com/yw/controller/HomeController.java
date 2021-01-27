@@ -1,30 +1,30 @@
 package com.yw.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.security.Principal;
+import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.yw.security.CustomUserDetail;
+import com.yw.service.ApplyService;
 import com.yw.service.MemberService;
+import com.yw.vo.ApplyVo;
+import com.yw.vo.MatchBoardVo;
 import com.yw.vo.MemberVo;
 
 @Controller
 public class HomeController {
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ApplyService applyService;
 	
 	@RequestMapping(value="/main")
 	public String home(Locale locale, Model model) {
@@ -52,7 +52,6 @@ public class HomeController {
 	public String signUpAction(MemberVo vo,String year, String month, String day) {
 		String birth=year+month+day;
 		vo.setBirth(birth);
-		System.out.println(vo.toString());
 		memberService.insertMemberService(vo);
 		return "main";
 	}
@@ -68,7 +67,19 @@ public class HomeController {
 	**/
 	
 	@RequestMapping(value="myPage")
-	public String myPage() {
+	public String myPage(Model model,Principal principal,Authentication authentication) {
+		String id=principal.getName();
+		List<MatchBoardVo> myMatchList=memberService.myMatchService(id);
+		List<MatchBoardVo> myMercenaryList=memberService.myMercenaryService(id);
+		List<MatchBoardVo> myMatchApplyList=memberService.myMatchApplyService(id);
+		List<MatchBoardVo> myMercenaryApplyList= memberService.myMercenaryApplyService(id);
+		//List<ApplyVo> applyList = applyService.applyListService();
+
+		model.addAttribute("myMatchList",myMatchList);
+		model.addAttribute("myMercenaryList", myMercenaryList);
+		model.addAttribute("myMatchApplyList",myMatchApplyList);
+		model.addAttribute("myMercenaryApplyList", myMercenaryApplyList);
+		//model.addAttribute("applyList", applyList);
 		return "myPage";
 	}
 

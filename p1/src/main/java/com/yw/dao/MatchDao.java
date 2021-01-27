@@ -8,4 +8,5 @@ public interface MatchDao {
 	public void newMatch(MatchBoardVo vo);
 	public List<MatchBoardVo> matchList(String category);
 	public MatchBoardVo matchDetail(int mbno);
+	public void updateState(int mbno);
 }

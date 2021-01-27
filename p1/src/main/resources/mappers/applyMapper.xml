@@ -7,7 +7,20 @@
  	<insert id="apply">
  		INSERT INTO apply(mbno,id,teamname) VALUES(#{mbno},#{id},#{teamname});
  	</insert>
+ 	
  	<select id="checkApply" resultType="int">
  		SELECT count(*) FROM apply WHERE id=#{id} AND mbno=#{mbno};
  	</select>
+ 	
+ 	<select id="applyList" resultType="com.yw.vo.ApplyVo">
+ 		SELECT * FROM apply WHERE mbno=#{mbno};
+ 	</select>
+ 	
+ 	<update id="updateState">
+ 		UPDATE apply SET state='매칭완료' WHERE applyno=#{applyno};
+ 	</update>
+ 	
+ 	<update id="updateStateFail">
+		UPDATE apply SET state='매칭실패' WHERE mbno=#{mbno} AND applyno!=#{applyno}; 	
+ 	</update>
  </mapper>

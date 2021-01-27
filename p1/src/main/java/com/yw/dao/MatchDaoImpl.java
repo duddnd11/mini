@@ -22,4 +22,8 @@ public class MatchDaoImpl implements MatchDao{
 	public MatchBoardVo matchDetail(int mbno) {
 		return sqlSession.selectOne("com.yw.mapper.MatchMapper.matchDetail", mbno);
 	}
+	@Override
+	public void updateState(int mbno) {
+		sqlSession.update("com.yw.mapper.MatchMapper.updateState", mbno);
+	}
 }

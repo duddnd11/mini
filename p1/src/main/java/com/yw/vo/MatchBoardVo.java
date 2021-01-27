@@ -14,11 +14,14 @@ public class MatchBoardVo {
 	private String state;
 	private String category;
 	private String skill;
+	private String id;
+	
+	private ApplyVo applyVo;
 	
 	public MatchBoardVo() {};
 
 	public MatchBoardVo(int mbno, String title, String date, String time,String addr, String place, String cost, String rule,
-			String contents, int hitcount, String state, String category,String skill) {
+			String contents, int hitcount, String state, String category,String skill,String id) {
 		super();
 		this.mbno = mbno;
 		this.title = title;
@@ -33,8 +36,25 @@ public class MatchBoardVo {
 		this.state = state;
 		this.category = category;
 		this.skill=skill;
+		this.id=id;
 	}
 	
+	public ApplyVo getApplyVo() {
+		return applyVo;
+	}
+
+	public void setApplyVo(ApplyVo applyVo) {
+		this.applyVo = applyVo;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getSkill() {
 		return skill;
 	}

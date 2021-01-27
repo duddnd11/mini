@@ -3,14 +3,14 @@
 <%@ include file="header.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <base target="_self">
 <script type="text/javascript">
-	var header = $("meta[name='_csrf_header']").attr('content');
-	var token = $("meta[name='_csrf']").attr('content');
+	var header = $("meta[name='_csrf_header']").attr("th:content");
+	var token = $("meta[name='_csrf']").attr("th:content");
 	function apply_match(){
 			var applyData={
 				mbno :$("#mbno").val(),
@@ -24,10 +24,11 @@
 				data:JSON.stringify(applyData),
 				contentType : 'application/json',
 				beforeSend: function(xhr){
-				    xhr.setRequestHeader(header, token);
+					 xhr.setRequestHeader(header, token);
 				},
 				success: function(response){
-					alert("확인");
+					$(".matchButton").attr("disabled",true);
+					$(".matchButton").val("신청 완료");
 				},
 				error: function(){
 					}
@@ -40,26 +41,88 @@
 			});
 		});
 </script>
+<style>
+	.date>div{
+		font-size:17px;
+		display:inline-block;
+		font-weight: 550;
+	}
+	.place{
+		font-size:24px;
+		font-weight: 700;
+	}
+	.item>div{
+		display:inline-block;
+	}
+	.time{
+		margin-left:7px;
+	}
+	.cost,.skill,.state{
+		margin-left:15px;
+	}
+	.value{
+		font-weight: 550;
+		font-size: 16px;
+	}
+	.comment{
+		width: 685px;
+		height : 110px;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
 		<div id="map" style="width: 100%; height: 350px;"></div>
-		<span id="addr">${matchDetail.addr}</span>
-		<span id="place">${matchDetail.place}</span>
-			${matchDetail.rule} 
-			${matchDetail.date}
-			${matchDetail.contents} 
-			${matchDetail.state}
-				<input type="button" value="매치 신청" data-toggle="modal" data-target="#placeModal" />
-			<!-- 
+			<br/>
+			<div class="date">
+				<div>${matchDetail.date}</div>
+				<div class="time">${matchDetail.time}</div>
+			</div>
+			<div class="place"><span id="place">${matchDetail.place}</span></div>
+			<div><span id="addr">${matchDetail.addr}</span></div>
+			<br/>
+			<div>${matchDetail.id}</div>
+			<br/>
+			<div class="item">
+				<div class="rule">
+					<div>경기방식</div>
+					<div class="value">${matchDetail.rule}</div>
+				</div>
+				<div class="cost">
+					<div>비용</div>
+					<div class="value">${matchDetail.cost}</div>
+				</div>
+				<div class="skill">
+					<div>실력</div>
+					<div class="value">${matchDetail.skill}</div>
+				</div>
+				<div class="state">
+					<div>상태</div>
+					<div class="value">${matchDetail.state}</div>
+				</div>
+			</div>
+			<hr>
+			<div>${matchDetail.contents}</div>
+			<hr>
+			
+			<div>
+				<textarea class="comment">
+				</textarea>
+				<div>댓글</div>
+			</div>
+			<hr>
+			
 			<c:choose>
 			<c:when test="${checkApply >=1 }">
-				<input type="button" value="신청 완료"/>
+				<input type="button" value="신청 완료" class="matchButton"disabled/>
 			</c:when>
-			<c:otherwise>
-			</c:otherwise>
+			<c:when test="${matchDetail.category eq '매치'}">
+				<input type="button" value="매치 신청" class="matchButton" data-toggle="modal" data-target="#placeModal" />
+			</c:when>
+			<c:when test="${matchDetail.category eq '용병'}">
+				<input type="button" value="용병 신청" class="matchButton"/>
+			</c:when>
 			</c:choose>
-			 -->
 				<div id="placeModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -71,7 +134,7 @@
 									<input type="hidden" id="mbno" name="mbno" value="${matchDetail.mbno}"/>
 									<sec:authentication property="principal.username" var="userId" />
 									<input type="hidden" id="id" name="id" value="${userId}"/>
-									<button type="button" id="apply_button" >매치 신청</button>
+									<button type="button"  id="apply_button">매치 신청</button>
 									<button type="button" data-dismiss="modal">취소</button>
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								</form>
@@ -79,6 +142,7 @@
 						</div>
 					</div>
 				</div>
+				
 	</div>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ea6851c46139f72cfdeecdff1f58acf&libraries=services"></script>
@@ -124,6 +188,5 @@
 							}
 						});
 	</script>
-
 </body>
 </html>

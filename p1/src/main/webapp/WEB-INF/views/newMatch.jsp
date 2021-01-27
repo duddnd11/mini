@@ -337,6 +337,8 @@
 			</div>
 			<input type="submit" value="작성" formaction="newMatchAction" /> 
 			<input type="hidden" name="category" value="${category}" /> 
+			<sec:authentication property="principal.username" var="userId" />
+			<input type="hidden" id="id" name="id" value="${userId}"/>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 	</div>

@@ -7,46 +7,68 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <style>
-	
+	.year,.month,.day{
+		width:155px;
+		height:45px;
+		font-size : 16px;
+	}
+	.month,.day{
+		margin-left :13px;
+	}
+	.gender{
+		width:100%;
+		height:45px;
+	}
 </style>
 </head>
 <body>
 		<div class="userContainer">
-			<h1>회원가입</h1>
+			<div class="user-body">
+			<h3>회원가입</h3>
 			<form action="signUpAction" method="post">
 				<div>
-					<h3>이름 </h3>
-					<input type="text" name="name"/>
+					<h4>이름 </h4>
+					<input type="text" name="name" placeholder="이름을 입력해주세요."/>
 				</div>
 				<div>
-					<h3>아이디</h3>
-					<input type="text" name="id"/>
+					<h4>아이디</h4>
+					<input type="text" name="id" placeholder="아이디를 입력해 주세요."/>
 				</div>
 				<div>
-					<h3>비밀번호</h3>
-					<input type="password" name="password"/>
+					<h4>비밀번호</h4>
+					<input type="password" name="password" placeholder="비밀번호를 입력해주세요."/>
 				</div>
 				<div>
-					<h3>비밀번호 확인</h3>
-					<input type="password" name="passwordCheck">
+					<h4>비밀번호 확인</h4>
+					<input type="password" name="passwordCheck" placeholder="비밀번호를 한번 더 입력해주세요.">
 				</div>
 				<div>
-					<h3>이메일</h3>
-					<input type="text" name="email"/>
+					<h4>이메일</h4>
+					<input type="text" name="email" placeholder="이메일을 입력해주세요."/>
 				</div>
 				<div>
-					<h3>성별</h3>
-					<input type="radio" name="gender" value="남성"/>남성
-					<input type="radio" name="gender" value="여성"/>여성
+					<h4>성별</h4>
+					<select class="gender" name="gender">
+						<option>성별</option>
+						<option value="남성">남성</option>
+						<option value="여성">여성</option>
+					</select>
 				</div>
 				<div>
-					<h3>생년월일</h3>
-					<input type="text" name="year"/><input type="text" name="month"/><input type="text" name="day"/>
+					<h4>생년월일</h4>
+					<input type="text" class="year" name="year" placeholder="년(4자)"/>
+					<select class="month" name="month">
+						<option>월</option>
+						<c:forEach begin="1" end="12" var="i">
+						<option value="${i}">${i}</option>
+						</c:forEach>
+					</select>
+					<input type="text" class="day" name="day" placeholder="일"/>
 					<input type="hidden" name="birth" value="0"/>
 				</div>
 				<div>
-					<h3>휴대폰 번호</h3>
-					<input type="text" name="phoneNum"/>
+					<h4>휴대폰 번호</h4>
+					<input type="text" name="phoneNum" placeholder="휴대폰 번호를 입력해주세요."/>
 				</div>
 				<br/>
 				<div>
@@ -54,6 +76,7 @@
 				</div>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }"/>
 			</form>
+			</div>
 		</div>
 </body>
 </html>

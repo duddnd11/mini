@@ -5,48 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="resources/matchCss.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>매치</title>
-<style>
-	.match{
-		height:90px;
-	}
-	.rigth-section{
-		display: inline-block;
-		float:right;
-	}
-	.left-section{
-		display: inline-block;
-	}
-	.left-box{
-		display:inline-block;
-	}
-	.rigth-box{
-		display:inline-block;
-		border-radius: 6px;
-		margin-left:20px;
-	}
-	.place{
-		font-size:15px;
-	}
-	.status{
-		border-radius: 6px;
-		background-color: rgb(49, 91, 174);
-		width:80px;
-		height:45px;
-		text-align: center;
-	}
-	.status-text{
-		color:white;
-	}
-	.date-span{
-		font-size:17px;
-		font-weight: bold;
-	}
-	.skill-span{
-		margin-left:16px;
-	}
-</style>
 </head>
 <body>
 	<a href="newMatch?category=${category}">매치작성</a>
@@ -63,19 +24,31 @@
 								${matchList.time}
 							</span>
 						</div>
-						<div class="rigth-box">
+						<div class="right-box">
 							<span class="place">${matchList.place}</span><br/>
 							<span>${matchList.rule}</span>
 							<span class="skill-span">실력 ${matchList.skill}</span>
 						</div>
 					</div>
-					<div class="rigth-section">
-						<div class="status">
-							<span class="status-text">
-								${matchList.state}<br/>
-								${matchList.cost}
-							</span>
-						</div>
+					<div class="right-section">
+					<c:choose>
+						<c:when test="${matchList.state eq '모집중'}">
+							<div class="status">
+								<span class="status-text">
+									${matchList.state}<br/>
+									${matchList.cost}
+								</span>
+							</div>
+						</c:when>
+						<c:when test="${matchList.state eq '모집완료'}">
+							<div class="status-complete">
+								<span class="status-text">
+									${matchList.state}<br/>
+									${matchList.cost}
+								</span>
+							</div>
+						</c:when>
+					</c:choose>
 					</div>
 				</div>
 			</a>
