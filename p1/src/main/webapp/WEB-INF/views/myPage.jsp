@@ -26,8 +26,7 @@
 	}
 </style>
 <script type="text/javascript">
-var header = $("meta[name='_csrf_header']").attr("th:content");
-var token = $("meta[name='_csrf']").attr("th:content");
+
 	function applyList(mbno){
 		var applyData={
 			mbno :mbno,

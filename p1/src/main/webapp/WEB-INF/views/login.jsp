@@ -25,6 +25,7 @@
 				<input type="password" name="password" placeholder="비밀번호를 입력해 주세요."/>
 			</div>
 			<br/>
+			${loginFailMsg}
 			<input type="submit" value="로그인"/>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<!-- csrf 사이트간 위조방지 목적 토큰 -->

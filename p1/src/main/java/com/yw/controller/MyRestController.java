@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yw.security.CustomUserDetail;
+import com.yw.security.CustomUserDetailService;
 import com.yw.service.ApplyService;
 import com.yw.service.MatchService;
 import com.yw.vo.ApplyVo;
@@ -21,6 +24,9 @@ public class MyRestController {
 	
 	@Autowired
 	MatchService matchService;
+	
+	@Autowired
+	CustomUserDetailService userService;
 	
 	@RequestMapping(value="/applymatch")
 	@ResponseBody
@@ -54,4 +60,26 @@ public class MyRestController {
 		applyService.updateStateFailService(applyno, mbno);
 		return 1;
 	}
+	
+	@RequestMapping(value="/idCheck")
+	@ResponseBody
+	public boolean idCheck(@RequestBody Map<String,String> param) {
+		String id = param.get("id").trim();
+		if(id=="") {
+			return false;
+		}
+		try{
+			CustomUserDetail user = (CustomUserDetail) userService.loadUserByUsername(id);
+		}catch(UsernameNotFoundException e) {
+			return true;
+		}
+		return false;
+	}
 }
+
+
+
+
+
+
+

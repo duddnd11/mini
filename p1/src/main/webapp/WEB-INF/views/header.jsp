@@ -87,6 +87,10 @@ a:hover {
 </style>
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <meta name="_csrf" th:content="${_csrf.token}">
+<script type="text/javascript">
+var header = $("meta[name='_csrf_header']").attr("th:content");
+var token = $("meta[name='_csrf']").attr("th:content");
+</script>
 </head>
 <body>
 	<header class="header">

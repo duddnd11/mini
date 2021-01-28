@@ -67,14 +67,14 @@ public class HomeController {
 	**/
 	
 	@RequestMapping(value="myPage")
-	public String myPage(Model model,Principal principal,Authentication authentication) {
+	public String myPage(Model model,Principal principal) {
 		String id=principal.getName();
 		List<MatchBoardVo> myMatchList=memberService.myMatchService(id);
 		List<MatchBoardVo> myMercenaryList=memberService.myMercenaryService(id);
 		List<MatchBoardVo> myMatchApplyList=memberService.myMatchApplyService(id);
 		List<MatchBoardVo> myMercenaryApplyList= memberService.myMercenaryApplyService(id);
 		//List<ApplyVo> applyList = applyService.applyListService();
-
+		
 		model.addAttribute("myMatchList",myMatchList);
 		model.addAttribute("myMercenaryList", myMercenaryList);
 		model.addAttribute("myMatchApplyList",myMatchApplyList);

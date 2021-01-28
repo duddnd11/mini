@@ -13,7 +13,8 @@
 		<!-- <security:intercept-url pattern="/" access="hasRole('ROLE_ADMIN')"/> -->
 		<security:form-login login-page="/login2" username-parameter="id"
 							 login-processing-url="/login-processing" 
-							 default-target-url="/main"/>
+							 default-target-url="/main"
+							 authentication-failure-handler-ref="customUSerFailHandler"/>
 							 
 		<security:logout invalidate-session="true" logout-url="/logout2" logout-success-url="/main" delete-cookies="JSESSIONID"/>
 		
@@ -36,4 +37,5 @@
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<context:component-scan base-package="com.yw.security"/>
 	<bean id="customUserService" class="com.yw.security.CustomUserDetailService" />
+	<bean id="customUSerFailHandler" class="com.yw.security.CustomUSerFailHandler"/>
 </beans>
