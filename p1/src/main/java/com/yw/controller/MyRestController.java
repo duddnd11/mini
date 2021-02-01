@@ -1,5 +1,6 @@
 package com.yw.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yw.security.CustomUserDetail;
 import com.yw.security.CustomUserDetailService;
 import com.yw.service.ApplyService;
+import com.yw.service.CommentService;
 import com.yw.service.MatchService;
 import com.yw.vo.ApplyVo;
+import com.yw.vo.CommentVo;
 
 @RestController
 @RequestMapping(value="/rest", produces = "application/json; charset=utf-8")
@@ -26,14 +29,17 @@ public class MyRestController {
 	MatchService matchService;
 	
 	@Autowired
+	CommentService commentService;
+	
+	@Autowired
 	CustomUserDetailService userService;
 	
 	@RequestMapping(value="/applymatch")
 	@ResponseBody
-	public int apply(@RequestBody Map<String,Object> param) {
-		int mbno=(Integer)param.get("mbno");
-		String id=(String) param.get("id");
-		String teamname=(String) param.get("teamname");
+	public int apply(@RequestBody Map<String,String> param,Principal principal) {
+		String id=principal.getName();
+		int mbno = Integer.parseInt(param.get("mbno"));
+		String teamname=param.get("teamname");
 		ApplyVo vo = new ApplyVo();
 		vo.setMbno(mbno);
 		vo.setId(id);
@@ -74,6 +80,23 @@ public class MyRestController {
 			return true;
 		}
 		return false;
+	}
+	
+	@RequestMapping(value="/writeComment")
+	@ResponseBody
+	public CommentVo writeComment(@RequestBody Map<String,String> param,Principal principal) {
+		String id = principal.getName();
+		int mbno = Integer.parseInt(param.get("mbno"));
+		String comment = param.get("comment");
+		int level =Integer.parseInt(param.get("level"));
+		int ref =Integer.parseInt(param.get("ref"));
+		commentService.writeCommentService(mbno, comment, id,level,ref);
+		CommentVo commentVo = commentService.topCommentService();
+		if(ref==0) {
+			commentService.updateRefService(commentVo.getCno());
+			commentVo.setRef(commentVo.getCno());
+		}
+		return commentVo;
 	}
 }
 

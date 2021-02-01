@@ -29,14 +29,13 @@
 	}
 </style>
 <script type="text/javascript">
-	var idCheck;
-	var pwCheck;
-	var emailCheck=$("#email").val();
-	var genderCheck=$("#gender").val();
-	var yearCheck=$(".year").val();
-	var monthCheck=$(".month").val();
-	var dayCheck;
-	var phoneCheck=$("#phoneNum").val();
+	var nameFlag=false;
+	var idFlag=false;
+	var pwFlag=false;
+	var emailFlag=false;
+	var genderFlag=false;
+	var birthFlag=false;
+	var phoneFlag=false;
 
 	function idCheck(id){
 		var idData={
@@ -55,7 +54,8 @@
 				var str="";
 				if(response == true){
 				 		str+= "<span style='color:blue'>";
-						str+="사용 가능한 아이디 입니다.";					
+						str+="사용 가능한 아이디 입니다.";
+						idFlag=true;
 					}else{
 				 		str+= "<span style='color:red'>";
 						str+= "사용 불가능한 아이디 입니다.";
@@ -67,6 +67,7 @@
 				}
 		});
 	}	
+	
 	$(function(){
 		$("#name").blur(function(){
 			$(".name-check").children().remove();
@@ -76,6 +77,8 @@
 			if(!nameExp.test(name)){
 				str+= "<span style='color:red'>";
 				str+="한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)";
+			}else{
+				nameFlag=true;
 			}
 			$(".name-check").append(str);
 		});
@@ -85,17 +88,18 @@
 			});
 		$("#pw2").blur(function(){
 				$(".pw-check").children().remove();
-				var password1RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; //비밀번호 유효성 검사
+				var password1RegExp = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; //비밀번호 유효성 검사
 				var pw = $("#pw").val();
 				var pw2 = $("#pw2").val();
 				var str = "";
 				if(pw==pw2){
 					if(!password1RegExp.test(pw)){
 						str+= "<span style='color:red'>";
-						str+="비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.";						
+						str+="비밀번호는 8자 이상이어야 하며, 숫자/소문자/특수문자를 모두 포함해야 합니다.";						
 					}else{
 						str+= "<span style='color:blue'>";
 						str+="비밀번호가 일치합니다.";	
+						pwFlag=true;
 					}
 				}else{
 					str+= "<span style='color:red'>";
@@ -112,7 +116,9 @@
 			if(!emailRegExp.test(email)){
 				str+= "<span style='color:red'>";
 				str+= "이메일 형식이 올바르지 않습니다.";
-			}
+			}else{
+				emailFlag=true;
+				}
 			$(".email-check").append(str);
 		});	
 		$("#gender").blur(function(){
@@ -122,7 +128,9 @@
 			if(gender=="성별"){
 				str+= "<span style='color:red'>";
 				str+= "성별을 선택해 주세요.";
-			}
+			}else{
+				genderFlag=true;
+				}
 			$(".gender-check").append(str);
 		});
 		$("#phoneNum").blur(function(){
@@ -133,62 +141,60 @@
 			if(!regPhone.test(phoneNum)){
 				str+= "<span style='color:red'>";
 				str+= "올바른 휴대폰 번호를 입력해 주세요.";
-			}
+			}else{
+				phoneFlag=true;
+				}
 			$(".phone-check").append(str);
 		});
+		
+		$("#year").blur(function(){
+			birthCheck();
+		});
+		$("#month").change(function(){
+			birthCheck();
+		});
+		$("#day").blur(function(){
+			birthCheck();
+		});
+	});
 		var today = new Date();
 		var year;
 		var month;
 		var day;
-		
-		$("#year").blur(function(){
-			$(".birth-check").children().remove();
-			var yearNow = today.getFullYear();
-			year=$("#year").val();
-			var str="";
-			if(year<1900 || year>yearNow){
-				str+= "<span style='color:red'>";
-				str+= "태어난 년도 4자리를 정확하게 입력하세요.";
-			}
-			$(".birth-check").append(str);
-		});
-		$("#month").change(function(event){
-			$(".birth-check").children().remove();
-			var str="";
-			month = $("#month").val();
-			alert("확인");
-			if(month=="월"){
-				str+= "<span style='color:red'>";
-				str+= "태어난 월을 선택하세요.";
-			}
-			$(".birth-check").append(str);
-		});
-		$("#day").blur(function(){
-			$(".birth-check").children().remove();
-			var str="";
-			day= $("#day").val();
-			if(day<1 || day>31){
-				dayCheck=false;
-			}else if((month==4 || month==6 || month==9 || month==11) && day==31){
-				dayCheck=false;
-			}else if(month==2){
-				var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-				if(day>29 || (day==29 && !isleap)){
-				dayCheck=false;
-				}
-			}else{
-				dayCheck=true;
-			}
 
-			if(!dayCheck){
-				str+= "<span style='color:red'>";
-				str+= "태어난 일(날짜) 2자리를 정확하게 입력하세요.";
+	function birthCheck(){
+		$(".birth-check").children().remove();
+		var yearNow = today.getFullYear();
+		year=$("#year").val();
+		month = $("#month").val();
+		day= $("#day").val();
+		var str="<span style='color:red'>";
+		if(year<1900 || year>yearNow){
+			str+= "태어난 년도 4자리를 정확하게 입력하세요.";
+		}else if(month=="월"){
+			str+= "태어난 월을 선택하세요.";
+		}else if(day<1 || day>31){
+			str+= "태어난 일(날짜) 2자리를 정확하게 입력하세요.";
+		}else if((month==4 || month==6 || month==9 || month==11) && day==31){
+			str+= "태어난 일(날짜) 2자리를 정확하게 입력하세요.";
+		}else if(month==2){
+			var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+			if(day>29 || (day==29 && !isleap)){
+			str+= "태어난 일(날짜) 2자리를 정확하게 입력하세요.";
 			}
-			$(".birth-check").append(str);
-		});
-	});
+		}else{
+			birthFlag=true;
+		}
+
+		$(".birth-check").append(str);
+	}
 	
 	function submitCheck(){
+		if(nameFlag && idFlag && pwFlag && emailFlag && genderFlag && birthFlag && phoneFlag){
+			return true;
+		}else{
+			alert("입력 정보를 다시 확인해 주세요.");
+		}
 		return false;
 	}
 </script>
@@ -248,7 +254,7 @@
 					</div>
 					<div>
 					<input type="text" class="year" id="year" name="year" placeholder="년(4자)"/>
-					<select class="month" name="month">
+					<select class="month" name="month" id="month">
 						<option>월</option>
 						<c:forEach begin="1" end="12" var="i">
 						<option value="${i}">${i}</option>

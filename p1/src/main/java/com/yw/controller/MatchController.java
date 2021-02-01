@@ -1,6 +1,7 @@
 package com.yw.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yw.service.ApplyService;
+import com.yw.service.CommentService;
 import com.yw.service.MatchService;
+import com.yw.vo.CommentVo;
 import com.yw.vo.MatchBoardVo;
 
 @Controller
@@ -19,6 +22,9 @@ public class MatchController {
 	
 	@Autowired
 	ApplyService applyService;
+	
+	@Autowired
+	CommentService commentService;
 	
 	@RequestMapping(value="/match")
 	public String match(Model model,String category){
@@ -47,9 +53,24 @@ public class MatchController {
 	public String matchDetail(int mbno,Model model,Principal principal) {
 		MatchBoardVo matchDetail =service.matchDetailService(mbno);
 		model.addAttribute("matchDetail", matchDetail);
-		String id=principal.getName();
-		int checkApply=applyService.checkApplyService(mbno, id);
+		int checkApply=0;
+		if(principal!=null) {
+			String id=principal.getName();
+			checkApply=applyService.checkApplyService(mbno, id);
+		}
 		model.addAttribute("checkApply", checkApply);
+		
+		List<CommentVo> commentList = commentService.commentListService(mbno);
+		List<CommentVo> reCommentList = new ArrayList<CommentVo>();
+		
+		for(CommentVo comment : commentList) {
+			if(comment.getLevel()==1) {
+				reCommentList.add(comment);
+			}
+		}
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("reCommentList", reCommentList);
+		
 		return "matchDetail";
 	}
 }

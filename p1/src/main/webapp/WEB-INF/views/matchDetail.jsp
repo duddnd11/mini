@@ -14,8 +14,7 @@
 	function apply_match(){
 			var applyData={
 				mbno :$("#mbno").val(),
-				id :$("id").val(),
-				teamname:$("teamname").val()
+				teamname:$("#teamname").val()
 			}
 
 			$.ajax({
@@ -34,12 +33,74 @@
 					}
 			});
 		}
+
+	function write_comment(comment,level,ref){
+			var commentData={
+					mbno:$("#mbno").val(),
+					comment:comment,
+					level : level,
+					ref:ref
+			}
+
+			$.ajax({
+				url:'rest/writeComment',
+				type:'post',
+				data:JSON.stringify(commentData),
+				contentType : 'application/json',
+				beforeSend: function(xhr){
+					 xhr.setRequestHeader(header, token);
+				},
+				success: function(response){
+					var str ="";
+					if(response.level==0){
+						str+="<div>";
+					}
+					str+='<span class="comment_id">'+response.id+'</span><br/>';
+					str+='<span class="comment_date">'+response.date+'</span><br/>';
+					str+='<span class="comment_comment">'+response.comment+'</span>';
+					
+					if(response.level ==0 ){
+						str+='<div class="reCommentToggle"><span>답글작성</span><br/><br/></div>';
+						str+='<div class="reCommentDiv">';
+						str+='<div class="reCommentContainer'+response.ref+'"></div>';
+						str+='<div class="commentDiv">';
+						str+='<textarea class="comment" name="comment" id="comment"></textarea></div>';
+						str+='<div class="commentBtnDiv">';
+						str+='<input type="button" class="commentBtn" id="commentBtn" value="등록"/>';
+						str+='<input type="hidden" id="level" value="1"/>';
+						str+='<input type="hidden" id="ref" value="'+response.ref+'"/></div>';
+						str+="</div></div>";
+					$(".commentContainer").append(str);
+					}else{
+					str+="<br/><br/>";
+					$(".reCommentContainer"+response.ref).append(str);	
+					}
+				},
+				error: function(){
+					}
+			});
+
+		}
 	
 	$(function(){
 		$("#apply_button").click(function(){
 				apply_match();
 			});
-		});
+		$("#reject_button").click(function(){
+				alert("로그인 해주세요.");
+			});
+		
+	});
+
+	  $(document).on("click","input[class='commentBtn']",function(){
+			var level = $(this).parent().find("#level").val();
+			var ref = $(this).parent().find("#ref").val();
+			var comment = $(this).parent().parent().find("#comment").val();
+			write_comment(comment,level,ref);
+	   });
+	   $(document).on("click","div.reCommentToggle",function(){
+				$(this).parent().find(".reCommentDiv").toggle();
+		   });
 </script>
 <style>
 	.date>div{
@@ -64,10 +125,33 @@
 		font-weight: 550;
 		font-size: 16px;
 	}
-	.comment{
-		width: 685px;
+	.commentDiv,.comment{
+		width: 730px;
 		height : 110px;
+		display: inline-block;
 	}
+	.commentBtnDiv,#commentBtn{
+		display: inline-block;
+		height : 110px;
+   		width: 120px;
+    	float: right;
+	}
+	.comment_date{
+		font-size: 12px;
+	    color: #cccccc;
+	}
+	.reCommentToggle{
+		margin-top:5px;
+	}
+	.reCommentDiv{
+		display: none;
+		margin-left:40px;
+	}
+	.reCommentDiv>.commentDiv,.reCommentDiv>.commentDiv>.comment{
+		width:680px;
+		
+	}
+
 </style>
 </head>
 <body>
@@ -104,14 +188,49 @@
 			<hr>
 			<div>${matchDetail.contents}</div>
 			<hr>
-			
+			<div class="commentContainer">
+				<c:forEach items="${commentList}" var="commentList">
+					<c:if test="${commentList.level eq 0 }">
+						<div>
+							<span class="comment_id">${commentList.id}</span><br/>
+							<span class="comment_date">${commentList.date}</span><br/>
+							<span class="comment_comment">${commentList.comment}</span><br/>
+							<div class="reCommentToggle"><span>답글작성</span><br/><br/></div>
+							<div class="reCommentDiv">
+								<div class="reCommentContainer${commentList.ref}">
+								<c:forEach items="${reCommentList}" var="reCommentList">
+								<c:if test="${reCommentList.ref eq commentList.cno}">
+									<span class="comment_id">${reCommentList.id}</span><br/>
+									<span class="comment_date">${reCommentList.date}</span><br/>
+									<span class="comment_comment">${reCommentList.comment}</span><br/><br/>
+								</c:if>
+								</c:forEach>
+								</div>
+								<div class="commentDiv">
+									<textarea class="comment" name="comment" id="comment"></textarea>
+								</div>
+								<div class="commentBtnDiv">
+									<input type="button" class="commentBtn" id="commentBtn" value="등록"/>
+									<input type="hidden" id="level" value="1"/>
+									<input type="hidden" id="ref" value="${commentList.cno}"/>
+								</div>
+							</div>
+						</div>
+					</c:if>
+				</c:forEach>
+			</div>
 			<div>
-				<textarea class="comment">
-				</textarea>
-				<div>댓글</div>
+				<div class="commentDiv">
+					<textarea class="comment" name="comment" id="comment"></textarea>
+				</div>
+				<div class="commentBtnDiv">
+					<input type="button" class="commentBtn" id="commentBtn" value="등록"/>
+					<input type="hidden" id="level" value="0"/>
+					<input type="hidden" id="ref" value="0"/>
+				</div>
 			</div>
 			<hr>
-			
+			<sec:authorize access="isAuthenticated()">
 			<c:choose>
 			<c:when test="${checkApply >=1 }">
 				<input type="button" value="신청 완료" class="matchButton"disabled/>
@@ -123,6 +242,10 @@
 				<input type="button" value="용병 신청" class="matchButton"/>
 			</c:when>
 			</c:choose>
+			</sec:authorize>
+			<sec:authorize access="isAnonymous()">
+				<input type="button" value="매치 신청" class="matchButton"  id="reject_button"/>
+			</sec:authorize>
 				<div id="placeModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -132,8 +255,6 @@
 									<input type="text" id="teamname" name="teamname"/>
 									</div>
 									<input type="hidden" id="mbno" name="mbno" value="${matchDetail.mbno}"/>
-									<sec:authentication property="principal.username" var="userId" />
-									<input type="hidden" id="id" name="id" value="${userId}"/>
 									<button type="button"  id="apply_button">매치 신청</button>
 									<button type="button" data-dismiss="modal">취소</button>
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

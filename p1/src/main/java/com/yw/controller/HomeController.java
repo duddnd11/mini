@@ -50,6 +50,12 @@ public class HomeController {
 	
 	@RequestMapping(value="signUpAction", method=RequestMethod.POST)
 	public String signUpAction(MemberVo vo,String year, String month, String day) {
+		if(month.length()==1) {
+			month="0"+month;
+		}
+		if(day.length()==1) {
+			day="0"+day;
+		}
 		String birth=year+month+day;
 		vo.setBirth(birth);
 		memberService.insertMemberService(vo);
