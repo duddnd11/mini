@@ -14,7 +14,8 @@
 	function apply_match(){
 			var applyData={
 				mbno :$("#mbno").val(),
-				teamname:$("#teamname").val()
+				teamname:$("#teamname").val(),
+				writerId : $("#writerId").val()
 			}
 
 			$.ajax({
@@ -64,7 +65,7 @@
 						str+='<div class="reCommentDiv">';
 						str+='<div class="reCommentContainer'+response.ref+'"></div>';
 						str+='<div class="commentDiv">';
-						str+='<textarea class="comment" name="comment" id="comment"></textarea></div>';
+						str+='<textarea class="comment" name="comment" id="comment" placeholder="댓글을 입력해주세요."></textarea></div>';
 						str+='<div class="commentBtnDiv">';
 						str+='<input type="button" class="commentBtn" id="commentBtn" value="등록"/>';
 						str+='<input type="hidden" id="level" value="1"/>';
@@ -86,8 +87,9 @@
 		$("#apply_button").click(function(){
 				apply_match();
 			});
-		$("#reject_button").click(function(){
+		$(".reject_button").click(function(){
 				alert("로그인 해주세요.");
+				$("#comment").val('');
 			});
 		
 	});
@@ -207,13 +209,18 @@
 								</c:forEach>
 								</div>
 								<div class="commentDiv">
-									<textarea class="comment" name="comment" id="comment"></textarea>
+									<textarea class="comment" name="comment" id="comment" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
+								<sec:authorize access="isAuthenticated()">
 								<div class="commentBtnDiv">
 									<input type="button" class="commentBtn" id="commentBtn" value="등록"/>
 									<input type="hidden" id="level" value="1"/>
 									<input type="hidden" id="ref" value="${commentList.cno}"/>
 								</div>
+								</sec:authorize>
+									<sec:authorize access="isAnonymous()">
+									<input type="button" value="등록" class="commentBtn reject_button"  id="commentBtn"/>
+								</sec:authorize>
 							</div>
 						</div>
 					</c:if>
@@ -221,13 +228,18 @@
 			</div>
 			<div>
 				<div class="commentDiv">
-					<textarea class="comment" name="comment" id="comment"></textarea>
+					<textarea class="comment" name="comment" id="comment" placeholder="댓글을 입력해주세요."></textarea>
 				</div>
+				<sec:authorize access="isAuthenticated()">
 				<div class="commentBtnDiv">
 					<input type="button" class="commentBtn" id="commentBtn" value="등록"/>
 					<input type="hidden" id="level" value="0"/>
 					<input type="hidden" id="ref" value="0"/>
 				</div>
+				</sec:authorize>
+				<sec:authorize access="isAnonymous()">
+					<input type="button" value="등록" class="commentBtn reject_button"  id="commentBtn"/>
+				</sec:authorize>
 			</div>
 			<hr>
 			<sec:authorize access="isAuthenticated()">
@@ -242,9 +254,10 @@
 				<input type="button" value="용병 신청" class="matchButton"/>
 			</c:when>
 			</c:choose>
+			<input type="hidden" id="writerId" value="${matchDetail.id}"/>
 			</sec:authorize>
 			<sec:authorize access="isAnonymous()">
-				<input type="button" value="매치 신청" class="matchButton"  id="reject_button"/>
+				<input type="button" value="매치 신청" class="matchButton reject_button"  id="reject_button"/>
 			</sec:authorize>
 				<div id="placeModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
@@ -252,10 +265,10 @@
 							<div class="modal-body">
 								<form action="apply" method="post" target="_self">
 									<div>
-									<input type="text" id="teamname" name="teamname"/>
+									<input type="text" id="teamname" name="teamname" />
 									</div>
 									<input type="hidden" id="mbno" name="mbno" value="${matchDetail.mbno}"/>
-									<button type="button"  id="apply_button">매치 신청</button>
+									<button type="button" id="apply_button" data-dismiss="modal">매치 신청</button>
 									<button type="button" data-dismiss="modal">취소</button>
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								</form>

@@ -1,9 +1,11 @@
 package com.yw.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,13 @@ import com.yw.service.CommentService;
 import com.yw.service.MatchService;
 import com.yw.vo.ApplyVo;
 import com.yw.vo.CommentVo;
+import com.yw.vo.MatchBoardVo;
+
+import net.nurigo.java_sdk.Coolsms;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
+
 
 @RestController
 @RequestMapping(value="/rest", produces = "application/json; charset=utf-8")
@@ -45,6 +54,31 @@ public class MyRestController {
 		vo.setId(id);
 		vo.setTeamname(teamname);
 		applyService.applyService(vo);
+		MatchBoardVo matchVo =matchService.matchDetailService(mbno);
+		String category=matchVo.getCategory();
+		
+		/*
+		// 문자 전송
+		String writerId = param.get("writerId");
+		CustomUserDetail user = (CustomUserDetail) userService.loadUserByUsername(writerId);
+		String api_key="NCSI1OI9LPOHBIL0";
+		String api_secret="4QVFDL3PXY8SE14V3ABOIYOIAXYXOGWX";
+		Message message = new Message(api_key,api_secret);
+		HashMap<String, String> set = new HashMap<String, String>();
+		set.put("to", user.getPhoneNum()); // 받는 사람
+	    set.put("from", "01076370922"); // 발신번호
+	    if(category.equals("매치")) {
+	    	set.put("text", "매치신청이 들어왔습니다."); // 문자내용
+	    }else {
+	    	set.put("text", "용병신청이 들어왔습니다."); // 문자내용
+	    }
+	    set.put("type", "sms"); // 문자 타입
+	    try {
+			JSONObject obj = (JSONObject)message.send(set);
+		} catch (CoolsmsException e) {
+			e.printStackTrace();
+		}
+		*/
 		return 1;
 	}
 	

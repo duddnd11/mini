@@ -37,5 +37,5 @@
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<context:component-scan base-package="com.yw.security"/>
 	<bean id="customUserService" class="com.yw.security.CustomUserDetailService" />
-	<bean id="customUSerFailHandler" class="com.yw.security.CustomUSerFailHandler"/>
+	<bean id="customUSerFailHandler" class="com.yw.security.CustomUserFailHandler"/>
 </beans>
