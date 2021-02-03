@@ -8,9 +8,19 @@
 <link href="resources/matchCss.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>매치</title>
+<script type="text/javascript">
+	function reject_button(){
+		alert("로그인 해주세요.")
+	}
+</script>
 </head>
 <body>
+	<sec:authorize access="isAuthenticated()">
 	<a href="newMatch?category=${category}">매치작성</a>
+	</sec:authorize>
+	<sec:authorize access="isAnonymous()">
+		<a href="#"  onclick="reject_button()">매치작성</a>
+	</sec:authorize>
 	<div class="container">
 		<c:forEach items="${matchList}" var="matchList">
 			<a href="matchDetail?mbno=${matchList.mbno}">

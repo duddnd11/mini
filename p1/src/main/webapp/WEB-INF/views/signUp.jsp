@@ -246,7 +246,7 @@
 						<option value="남성">남성</option>
 						<option value="여성">여성</option>
 					</select>
-				</div>
+					</div>
 				<div>
 					<div>
 					<h4>생년월일</h4>

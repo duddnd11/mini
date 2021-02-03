@@ -42,9 +42,12 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.map_wrap{
+	width: 100%;
+    height: 800px;
+}
 </style>
 <base target="_self">
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="map_wrap">
@@ -53,7 +56,7 @@
     <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div>
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="대화 레포츠" id="keyword" size="15"> 
                     <button onclick="searchPlaces(); return false;">검색하기</button> 
             </div>
         </div>
@@ -75,7 +78,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };  
 
 // 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+var map = new kakao.maps.Map(mapContainer, mapOption);
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
