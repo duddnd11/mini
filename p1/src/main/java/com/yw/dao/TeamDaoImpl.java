@@ -20,4 +20,9 @@ public class TeamDaoImpl implements TeamDao{
 	public List<TeamVo> teamList() {
 		return sqlSession.selectList("com.yw.mapper.TeamMapper.teamList");
 	}
+
+	@Override
+	public List<TeamVo> teamSearch(String name) {
+		return sqlSession.selectList("com.yw.mapper.TeamMapper.teamSearch", name);
+	}
 }

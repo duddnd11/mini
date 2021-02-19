@@ -23,4 +23,9 @@ public class TeamServiceImpl implements TeamService{
 		return dao.teamList();
 	}
 
+	@Override
+	public List<TeamVo> teamSearchService(String name) {
+		return dao.teamSearch(name);
+	}
+
 }

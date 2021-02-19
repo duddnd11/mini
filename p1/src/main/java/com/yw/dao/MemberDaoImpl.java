@@ -43,4 +43,14 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MatchBoardVo> myMercenaryApply(String id) {
 		return sqlSession.selectList("com.yw.mapper.MemberMapper.myMercenaryApply", id);
 	}
+
+	@Override
+	public void userModify(MemberVo vo) {
+		sqlSession.update("com.yw.mapper.MemberMapper.userModify", vo);
+	}
+
+	@Override
+	public void userModifyWithPw(MemberVo vo) {
+		sqlSession.update("com.yw.mapper.MemberMapper.userModifyWithPw", vo);
+	}
 }

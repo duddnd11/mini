@@ -24,6 +24,14 @@
 	h4{
 		font-weight: 550;
 	}
+	.imgDiv{
+		width:100px;
+	}
+	#profile-image{
+		border-radius: 50%;
+		width: 70px;
+		height: 70px;
+	}
 </style>
 <script type="text/javascript">
 
@@ -123,11 +131,12 @@
 	<div class="userContainer">
 		<div class="user-info">
 			<div class="left-section">
+				<img id="profile-image" src="resources/img/<sec:authentication property="principal.img"/>">
 				<sec:authentication property="principal.name"/>	<br/>	
 				<sec:authentication property="principal.email"/>	
 			</div>
 			<div class="right-section">
-				<a href="#">정보수정</a>	
+				<a href="userModify">정보수정</a>	
 			</div>
 		</div>
 		<div class="myMenu">

@@ -68,3 +68,19 @@
 .skill-span {
 	margin-left: 16px;
 }
+
+#fixedbtn{
+	position:fixed;
+	right:525px;
+	bottom:25px;
+	z-index:1000;
+	width:50px;
+}
+#placeSearch,#teamSearch{
+	display: none;
+	margin-bottom: 15px;
+}
+	
+#sort{
+	margin-bottom: 15px;
+}

@@ -1,21 +1,23 @@
 package com.yw.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberVo {
 	private String id;
-	private String name;
 	private String password;
+	private String name;
 	private String auth;
 	private int enabled;
 	private String email;
 	private String gender;
 	private String birth;
 	private String phoneNum;
+	private String img;
+	private MultipartFile multipart;
 	
-	public MemberVo() {
-		
-	}
+	public MemberVo() {}
 	public MemberVo(String id, String name, String password, String auth, int enabled, String email, String gender,
-			String birth, String phoneNum) {
+			String birth, String phoneNum,String img) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,6 +28,20 @@ public class MemberVo {
 		this.gender = gender;
 		this.birth = birth;
 		this.phoneNum = phoneNum;
+		this.img = img;
+	}
+	
+	public MultipartFile getMultipart() {
+		return multipart;
+	}
+	public void setMultipart(MultipartFile multipart) {
+		this.multipart = multipart;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	public String getEmail() {
 		return email;

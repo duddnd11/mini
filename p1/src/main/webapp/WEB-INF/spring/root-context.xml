@@ -27,10 +27,12 @@
 	</bean>
 	
 	
+	
 	<bean id="memberDao" class="com.yw.dao.MemberDaoImpl"/>
 	<bean id="teamDao" class="com.yw.dao.TeamDaoImpl"/>
 	<bean id="matchDao" class="com.yw.dao.MatchDaoImpl"/>
 	<bean id="applyDao" class="com.yw.dao.ApplyDaoImpl"/>
 	<bean id="commentDao" class="com.yw.dao.CommentDaoImpl"/>
 	<context:component-scan base-package="com.yw.service"/>
+	
 </beans>

@@ -45,4 +45,14 @@ public class MemberServiceImpl implements MemberService{
 		return dao.myMercenaryApply(id);
 	}
 
+	@Override
+	public void userModifyService(MemberVo vo) {
+		if(vo.getPassword().equals("")) {
+			dao.userModify(vo);
+		}else {
+			String encodedPassword = bCryptPasswordEncoder.encode(vo.getPassword());
+			vo.setPassword(encodedPassword);
+			dao.userModifyWithPw(vo);
+		}
+	}
 }

@@ -11,4 +11,5 @@ public interface MemberService {
 	public List<MatchBoardVo> myMercenaryService(String id);
 	public List<MatchBoardVo> myMatchApplyService(String id);
 	public List<MatchBoardVo> myMercenaryApplyService(String id);
+	public void userModifyService(MemberVo vo);
 }

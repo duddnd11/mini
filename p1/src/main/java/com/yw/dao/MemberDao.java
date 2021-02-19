@@ -13,4 +13,6 @@ public interface MemberDao {
 	public List<MatchBoardVo> myMercenary(String id);
 	public List<MatchBoardVo> myMatchApply(String id);
 	public List<MatchBoardVo> myMercenaryApply(String id);
+	public void userModify(MemberVo vo);
+	public void userModifyWithPw(MemberVo vo);
 }

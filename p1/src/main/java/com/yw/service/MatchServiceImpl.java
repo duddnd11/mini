@@ -32,4 +32,14 @@ public class MatchServiceImpl implements MatchService{
 	public void updateStateService(int mbno) {
 		dao.updateState(mbno);
 	}
+
+	@Override
+	public List<MatchBoardVo> placeSearchService(String category, String place) {
+		return dao.placeSearch(category, place);
+	}
+
+	@Override
+	public List<MatchBoardVo> dateSearchService(String category, String day1, String day2) {
+		return dao.dateSearch(category, day1, day2);
+	}
 }

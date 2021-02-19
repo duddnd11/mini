@@ -153,6 +153,9 @@
 		width:680px;
 		
 	}
+	#comment{
+		resize: none;
+	}
 
 </style>
 </head>

@@ -13,11 +13,11 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<link href="resources/mainCss.css" rel="stylesheet">
-<link href="resources/userCss.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="resources/mainCss.css" rel="stylesheet">
+<link href="resources/userCss.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -82,22 +82,28 @@ a:hover {
 	text-decoration: none;
 	color:black;
 }
+
 </style>
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <meta name="_csrf" th:content="${_csrf.token}">
 <script type="text/javascript">
 var header = $("meta[name='_csrf_header']").attr("th:content");
 var token = $("meta[name='_csrf']").attr("th:content");
+function reject_button(){
+	alert("로그인 해주세요.")
+}
 </script>
 </head>
 <body>
 	<header class="header">
 		<nav class="userNav">
 			<ul class="userUl">
+				
 				<sec:authorize access="isAnonymous()">
 					<li><a href="login2">로그인</a></li>
 					<li><a href="signUp">회원가입</a></li>
 				</sec:authorize>
+				
 				<sec:authorize access="isAuthenticated()">
 					<p class="userName">
 						<sec:authentication property="principal.username" var="userId" />
@@ -112,6 +118,7 @@ var token = $("meta[name='_csrf']").attr("th:content");
 						</form>
 					<li><a href="myPage">My Page</a></li>
 				</sec:authorize>
+				
 				<li><a href="serviceCenter">고객센터</a></li>
 			</ul>
 		</nav>

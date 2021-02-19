@@ -15,7 +15,10 @@
 	.month,.day{
 		margin-left :13px;
 	}
-
+	.gender{
+		width:100%;
+		height:45px;
+	}
 	h4{
 		display: inline-block;
 	}
@@ -24,50 +27,22 @@
 		float: right;
     	margin-top: 17px;
 	}
-	
+	#pwDiv{
+		display: none;
+	}
 </style>
 <script type="text/javascript">
-	var nameFlag=false;
-	var idFlag=false;
-	var pwFlag=false;
-	var emailFlag=false;
-	var genderFlag=false;
-	var birthFlag=false;
-	var phoneFlag=false;
+	var nameFlag=true;
+	var idFlag=true;
+	var pwFlag=true;
+	var emailFlag=true;
+	var genderFlag=true;
+	var birthFlag=true;
+	var phoneFlag=true;
 
-	function idCheck(id){
-		var idData={
-			id:id
-		}
-		$.ajax({
-			url:'rest/idCheck',
-			type:'post',
-			data:JSON.stringify(idData),
-			contentType : 'application/json',
-			beforeSend: function(xhr){
-				 xhr.setRequestHeader(header, token);
-			},
-			success: function(response){
-				$(".id-check").children().remove();
-				var str="";
-				if(response == true){
-				 		str+= "<span style='color:blue'>";
-						str+="사용 가능한 아이디 입니다.";
-						idFlag=true;
-					}else{
-				 		str+= "<span style='color:red'>";
-						str+= "사용 불가능한 아이디 입니다.";
-					}
-				str+="</span>";
-				$(".id-check").append(str);
-			},
-			error: function(){
-				}
-		});
-	}	
-	
 	$(function(){
 		$("#name").blur(function(){
+			nameFlag=false;
 			$(".name-check").children().remove();
 			var name=$("#name").val();
 			var nameExp = /^[가-힣]{2,5}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/; 
@@ -80,10 +55,6 @@
 			}
 			$(".name-check").append(str);
 		});
-		$("#id").blur(function(){
-				var id = $("#id").val();
-				idCheck(id);
-			});
 		$("#pw2").blur(function(){
 				$(".pw-check").children().remove();
 				var password1RegExp = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; //비밀번호 유효성 검사
@@ -107,6 +78,7 @@
 				$(".pw-check").append(str);
 			});
 		$("#email").blur(function(){
+			emailFlag=false;
 			$(".email-check").children().remove();
 			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
 			var email=$("#email").val();
@@ -120,6 +92,7 @@
 			$(".email-check").append(str);
 		});	
 		$("#gender").blur(function(){
+			genderFlag=false;
 			$(".gender-check").children().remove();
 			var gender=$("#gender").val();
 			var str="";
@@ -132,6 +105,7 @@
 			$(".gender-check").append(str);
 		});
 		$("#phoneNum").blur(function(){
+			phoneFlag=false;
 			$(".phone-check").children().remove();
 			var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 			var phoneNum=$("#phoneNum").val();
@@ -154,20 +128,13 @@
 		$("#day").blur(function(){
 			birthCheck();
 		});
-		
-		$("#profile-imageFile").on('change',function(){
-			readURL(this);
-			});
-		function readURL(input) {
-            if (input.files && input.files[0]) {
-               var reader = new FileReader();
-               reader.onload = function (e) {
-                  $('#preImage').attr('src', e.target.result);
-               }
-               reader.readAsDataURL(input.files[0]);
-            }
-        }
-		
+
+		$("#pwToggle").click(function(){
+			$("#pwDiv").toggle();
+			$("#pw").val("");
+			$("#pw2").val("");
+			pwFlag=!pwFlag;
+		});
 	});
 		var today = new Date();
 		var year;
@@ -175,6 +142,7 @@
 		var day;
 
 	function birthCheck(){
+		birthFlag=false;
 		$(".birth-check").children().remove();
 		var yearNow = today.getFullYear();
 		year=$("#year").val();
@@ -214,32 +182,29 @@
 <body>
 		<div class="userContainer">
 			<div class="user-body">
-			<h3>회원가입</h3>
-			<form action="signUpAction" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data" >
-				<input type="file" id="profile-imageFile" name="multipart" style="display:none"/>
-				<div id="preImageDiv">
-					<img id="preImage" src="resources/img/기본프로필.png" onclick="document.all.multipart.click()"/>
-				</div>
+			<h3>내 정보 수정</h3>
+			<form action="userModifyAction" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data" >
+				<input type="file" name="multipart"/>
 				<div>
 					<div>
 					<h4>이름 </h4>
 					<div class="name-check"></div>
 					</div>
-					<input type="text" name="name" id="name" placeholder="이름을 입력해주세요."/>
+					<input type="text" name="name" id="name" placeholder="이름을 입력해주세요." value="${user.name}"/>
 				</div>
 				<div>
 					<div>
 						<h4>아이디</h4>
 						<div class="id-check"></div>
 					</div>
-					<input type="text" name="id" id="id" placeholder="아이디를 입력해 주세요."/>
+					<input type="text" name="id" id="id" value="${user.id}" disabled="disabled"/>
 				</div>
-				<div>
+				<div id="pwToggle">
 					<h4>비밀번호</h4>
-					<input type="password" name="password" id="pw" placeholder="비밀번호를 입력해주세요."/>
 				</div>
-				<div>
+				<div id="pwDiv">
 					<div>
+						<input type="password" name="password" id="pw" placeholder="비밀번호를 입력해주세요."/>
 						<h4>비밀번호 확인</h4>
 						<div class="pw-check"></div>
 					</div>
@@ -250,7 +215,7 @@
 					<h4>이메일</h4>
 					<div class="email-check"></div>
 					</div>
-					<input type="text" id="email" name="email" placeholder="이메일을 입력해주세요."/>
+					<input type="text" id="email" name="email" placeholder="이메일을 입력해주세요." value="${user.email}"/>
 				</div>
 				<div>
 					<div>
@@ -259,24 +224,32 @@
 					</div>
 					<select class="gender" id="gender" name="gender">
 						<option>성별</option>
-						<option value="남성">남성</option>
-						<option value="여성">여성</option>
+						<c:choose>
+							<c:when test="${user.gender eq '남성' }">
+								<option value="남성" selected>남성</option>
+								<option value="여성">여성</option>
+							</c:when>
+							<c:when test="${user.gender eq '여성' }">
+								<option value="남성">남성</option>
+								<option value="여성" selected>여성</option>
+							</c:when>
+						</c:choose>
 					</select>
-				</div>
+					</div>
 				<div>
 					<div>
 					<h4>생년월일</h4>
 					<div class="birth-check"></div>
 					</div>
 					<div>
-					<input type="text" class="year" id="year" name="year" placeholder="년(4자)"/>
+					<input type="text" class="year" id="year" name="year" value="${year}" placeholder="년(4자)"/>
 					<select class="month" name="month" id="month">
 						<option>월</option>
 						<c:forEach begin="1" end="12" var="i">
-						<option value="${i}">${i}</option>
+						<option value="${i}"<c:if test="${month eq i}">selected</c:if>>${i}</option>
 						</c:forEach>
 					</select>
-					<input type="text" class="day" id="day" name="day" placeholder="일"/>
+					<input type="text" class="day" id="day" name="day" value="${day}" placeholder="일"/>
 					</div>
 					<input type="hidden" id="birth" name="birth" value="0"/>
 				</div>
@@ -285,11 +258,11 @@
 					<h4>휴대폰 번호</h4>
 					<div class="phone-check"></div>
 					</div>
-					<input type="text" id="phoneNum" name="phoneNum" placeholder="휴대폰 번호를 입력해주세요."/>
+					<input type="text" id="phoneNum" name="phoneNum" value="${user.phoneNum}"/>
 				</div>
 				<br/>
 				<div>
-					<input type="submit" value="회원가입"/>
+					<input type="submit" value="정보수정"/>
 				</div>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }"/>
 			</form>

@@ -5,7 +5,7 @@
   
  <mapper namespace="com.yw.mapper.MemberMapper">
  	<insert id="insertMember">
- 		INSERT INTO member(id,name,password,enabled,email,gender,birth,phoneNum) VALUES(#{id},#{name},#{password},1,#{email},#{gender},#{birth},#{phoneNum});	
+ 		INSERT INTO member(id,name,password,enabled,email,gender,birth,phoneNum,img) VALUES(#{id},#{name},#{password},1,#{email},#{gender},#{birth},#{phoneNum},#{img});	
  	</insert>
  	
  	<select id="getUserById" parameterType="String" resultType="com.yw.security.CustomUserDetail">
@@ -53,4 +53,26 @@
  	<select id="myMercenaryApply" resultMap="MatchBoardVo" parameterType="com.yw.vo.MatchBoardVo">
  		SELECT matchboard.*,apply.state as apply_state FROM matchboard,apply WHERE matchboard.mbno=apply.mbno AND category='용병' AND apply.id=#{id};
  	</select>
+ 	
+ 	<update id="userModify" >
+ 		UPDATE member SET name=#{name},email=#{email},gender=#{gender},birth=#{birth},phoneNum=#{phoneNum} WHERE id=#{id};
+ 	</update>
+ 	<update id="userModifyWithPw" >
+ 		UPDATE member SET name=#{name},password=#{password},email=#{email},gender=#{gender},birth=#{birth},phoneNum=#{phoneNum} WHERE id=#{id};
+ 	</update>
  </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

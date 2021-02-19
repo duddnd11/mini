@@ -43,3 +43,17 @@ textarea {
 	width: 1024px;
     height: 800px;
 }
+.gender{
+		width:100%;
+		height:45px;
+}
+#preImage{
+	width: 100%;
+	height: 100%;
+	border-radius :50%;
+}
+#preImageDiv{
+	width: 193px;
+	height: 192px;
+	margin: 0 auto;
+}

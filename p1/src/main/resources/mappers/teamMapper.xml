@@ -5,9 +5,12 @@
   
  <mapper namespace="com.yw.mapper.TeamMapper">
  	<insert id="createTeam">
- 		INSERT INTO team(name,members,sport,addr,gender,introduce,representative) VALUES(#{name},#{members},#{sport},#{addr},#{gender},#{introduce},#{representative});
+ 		INSERT INTO team(name,members,sport,addr,gender,introduce,representative,img) VALUES(#{name},#{members},#{sport},#{addr},#{gender},#{introduce},#{representative},#{img});
  	</insert>
  	<select id="teamList" resultType="com.yw.vo.TeamVo">
  		SELECT * FROM team;
+ 	</select>
+ 	<select id="teamSearch" resultType="com.yw.vo.TeamVo">
+ 		SELECT * FROM team WHERE name LIKE CONCAT('%', #{name},'%') OR addr LIKE CONCAT('%', #{name},'%');
  	</select>
  </mapper>

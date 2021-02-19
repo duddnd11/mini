@@ -1,5 +1,7 @@
 package com.yw.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class TeamVo {
 	private int teamno;
 	private String name;
@@ -9,6 +11,8 @@ public class TeamVo {
 	private String gender;
 	private String introduce;
 	private String representative;
+	private MultipartFile multipart;
+	private String img;
 	
 	public TeamVo() {}
 	
@@ -24,6 +28,23 @@ public class TeamVo {
 		this.representative=representative;
 		
 	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public MultipartFile getMultipart() {
+		return multipart;
+	}
+
+	public void setMultipart(MultipartFile multipart) {
+		this.multipart = multipart;
+	}
+
 	public int getTeamno() {
 		return teamno;
 	}

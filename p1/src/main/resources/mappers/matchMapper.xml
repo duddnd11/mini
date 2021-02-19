@@ -5,7 +5,7 @@
   
  <mapper namespace="com.yw.mapper.MatchMapper">
  	<insert id="newMatch">
- 		INSERT INTO matchboard(title,date,time,addr,place,cost,rule,contents,category,skill,id) VALUES(#{title},#{date},#{time},#{addr},#{place},#{cost},#{rule},#{contents},#{category},#{skill},#{id});
+ 		INSERT INTO matchboard(title,matchdate,time,addr,place,cost,rule,contents,category,skill,id) VALUES(#{title},#{matchdate},#{time},#{addr},#{place},#{cost},#{rule},#{contents},#{category},#{skill},#{id});
  	</insert>
  	
  	<select id="matchList" resultType="com.yw.vo.MatchBoardVo">
@@ -19,4 +19,12 @@
  	<update id="updateState">
  		UPDATE matchboard SET state='모집완료' WHERE mbno=#{mbno};
  	</update>
+ 	
+ 	<select id="placeSearch" resultType="com.yw.vo.MatchBoardVo">
+ 		SELECT * FROM matchboard WHERE (addr LIKE CONCAT('%', #{place},'%') or place LIKE CONCAT('%', #{place},'%')) AND category=#{category};
+ 	</select>
+ 	
+ 	<select id="dateSearch" resultType="com.yw.vo.MatchBoardVo">
+ 		SELECT * from matchboard WHERE <![CDATA[ matchdate >= #{day1} AND matchdate <= #{day2} ]]> AND category=#{category};
+ 	</select>
  </mapper>

@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 public class CustomUserDetail implements UserDetails {
 	private String id;
@@ -17,6 +18,8 @@ public class CustomUserDetail implements UserDetails {
 	private String gender;
 	private String birth;
 	private String phoneNum;
+	private String img;
+	private MultipartFile multipart;
 	
 	
 	@Override
@@ -24,6 +27,18 @@ public class CustomUserDetail implements UserDetails {
 		ArrayList<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(auth));
 		return authList;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public MultipartFile getMultipart() {
+		return multipart;
+	}
+	public void setMultipart(MultipartFile multipart) {
+		this.multipart = multipart;
 	}
 	@Override
 	public String getPassword() {
@@ -100,6 +115,12 @@ public class CustomUserDetail implements UserDetails {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "CustomUserDetail [id=" + id + ", password=" + password + ", name=" + name + ", auth=" + auth
+				+ ", enabled=" + enabled + ", email=" + email + ", gender=" + gender + ", birth=" + birth
+				+ ", phoneNum=" + phoneNum + ", img=" + img + ", multipart=" + multipart + "]";
 	}
 	
 }

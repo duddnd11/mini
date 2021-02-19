@@ -9,19 +9,92 @@
 <meta charset="UTF-8">
 <title>매치</title>
 <script type="text/javascript">
-	function reject_button(){
-		alert("로그인 해주세요.")
-	}
+
+	$(function(){
+		$("#placeSearch").keydown(function(key) {
+	    	//키의 코드가 13번일 경우 (13번은 엔터키)
+	    	var place = $("#placeSearch").val();
+	        if (key.keyCode == 13) {
+		        location.href="match?category=${category}&place="+place;
+	        }
+	    });
+
+	    $("#search").click(function(){
+		    if($("#placeSearch").is(":visible")){
+			$("#placeSearch").slideUp();
+			}else{
+			$("#placeSearch").slideDown();
+				    }
+		});
+
+		$("#dateSearch-button").click(function(){
+			location.href="match?category=${category}&day1="+day1+"&day2="+day2;
+
+			});
+	});
+
+	var day1;
+	var day2;
+	var day1Id;
+	var day2Id;
+	var count=0;
+	
+	$(document).on("click",".dayTd",function(){
+		$(this).find(".day").attr("class","clicked");
+		var month = today.getMonth()+1;
+		if(month <10){
+				month="0"+month;
+		}
+		count++;
+		if(count==1){
+			$("#"+day1Id).removeClass("clicked");
+			$("#"+day1Id).addClass("day");
+			$("#"+day2Id).removeClass("clicked");
+			$("#"+day2Id).addClass("day");
+			day2="";
+			day1 = today.getFullYear() + "-" + month + "-" + $(this).text();
+			day1Id = $(this).find("span").attr("id");
+		}else{
+			day2 = today.getFullYear() + "-" + month + "-" + $(this).text();
+			day2Id = $(this).find("span").attr("id");
+			count=0;
+		}
+   });
+	
 </script>
+<style type="text/css">
+	
+
+</style>
 </head>
 <body>
-	<sec:authorize access="isAuthenticated()">
-	<a href="newMatch?category=${category}">매치작성</a>
-	</sec:authorize>
-	<sec:authorize access="isAnonymous()">
-		<a href="#"  onclick="reject_button()">매치작성</a>
-	</sec:authorize>
 	<div class="container">
+		<sec:authorize access="isAuthenticated()">
+			<a href="newMatch?category=${category}"><img src="resources/img/글쓰기.png" id="fixedbtn"></a>
+		</sec:authorize>
+		<sec:authorize access="isAnonymous()">
+			<a href="#"  onclick="reject_button()"><img src="resources/img/글쓰기.png" id="fixedbtn"></a>
+		</sec:authorize>
+		<div id="sort">
+			<span id="search">장소검색</span>
+			<span data-toggle="modal" data-target="#calendarModal">날짜선택</span>
+		</div>
+		<div id="calendarModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">
+								<%@include file="modal.jsp"%>
+								<input type="button" id="dateSearch-button" value="선택" data-dismiss="modal"/>
+							</div>
+						</div>
+					</div>
+				</div>
+		<div>
+		<input type="text" id="placeSearch" name="place" value="${place}" placeholder="주소 또는 장소명을 입력해주세요."/>
+		</div>
+		<c:if test="${matchList.size() eq 0}">
+			검색 결과가 없습니다.
+		</c:if>
 		<c:forEach items="${matchList}" var="matchList">
 			<a href="matchDetail?mbno=${matchList.mbno}">
 				<div class="match">

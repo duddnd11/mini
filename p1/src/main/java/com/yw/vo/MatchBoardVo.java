@@ -3,7 +3,7 @@ package com.yw.vo;
 public class MatchBoardVo {
 	private int mbno;
 	private String title;
-	private String date;
+	private String matchdate;
 	private String time;
 	private String addr;
 	private String place;
@@ -25,7 +25,7 @@ public class MatchBoardVo {
 		super();
 		this.mbno = mbno;
 		this.title = title;
-		this.date = date;
+		this.matchdate = date;
 		this.time=time;
 		this.addr = addr;
 		this.place = place;
@@ -96,11 +96,11 @@ public class MatchBoardVo {
 	}
 
 	public String getDate() {
-		return date;
+		return matchdate;
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.matchdate = date;
 	}
 
 	public String getAddr() {

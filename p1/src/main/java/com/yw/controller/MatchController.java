@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yw.service.ApplyService;
@@ -27,8 +28,18 @@ public class MatchController {
 	CommentService commentService;
 	
 	@RequestMapping(value="/match")
-	public String match(Model model,String category){
-		List<MatchBoardVo> matchList= service.matchListService(category);
+	public String match(Model model,String category,String place,String day1,String day2){
+		List<MatchBoardVo> matchList;
+		if(place==null && day1==null) {
+			matchList= service.matchListService(category);
+		}else if(place!=null){
+			matchList = service.placeSearchService(category, place);
+			model.addAttribute("place", place);
+		}else {
+			System.out.println(day1+","+day2);
+			matchList = service.dateSearchService(category, day1, day2);
+			System.out.println(matchList.size());
+		}
 		model.addAttribute("matchList", matchList);
 		model.addAttribute("category", category);
 		return "match";
