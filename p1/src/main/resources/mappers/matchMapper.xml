@@ -4,12 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.yw.mapper.MatchMapper">
- 	<insert id="newMatch">
+ 	<insert id="newMatch" useGeneratedKeys="true" keyProperty="mbno">
  		INSERT INTO matchboard(title,matchdate,time,addr,place,cost,rule,contents,category,skill,id) VALUES(#{title},#{matchdate},#{time},#{addr},#{place},#{cost},#{rule},#{contents},#{category},#{skill},#{id});
  	</insert>
  	
  	<select id="matchList" resultType="com.yw.vo.MatchBoardVo">
- 		SELECT * FROM matchboard WHERE category=#{cateogry};
+ 		SELECT * FROM matchboard WHERE category=#{category} AND state != '기간만료'
+ 		<if test="place != null">AND (addr LIKE CONCAT('%', #{place},'%') or place LIKE CONCAT('%', #{place},'%'))</if>
+ 		<if test="day1 !=null and day2 !=null">AND <![CDATA[ matchdate >= #{day1} AND matchdate <= #{day2} ]]></if>
+ 		ORDER BY matchdate <if test="kinds == null or kinds.equals('entry')">DESC</if>
+		LIMIT 10 OFFSET #{offset};
  	</select>
  	
  	<select id="matchDetail" resultType="com.yw.vo.MatchBoardVo">
@@ -21,10 +25,22 @@
  	</update>
  	
  	<select id="placeSearch" resultType="com.yw.vo.MatchBoardVo">
- 		SELECT * FROM matchboard WHERE (addr LIKE CONCAT('%', #{place},'%') or place LIKE CONCAT('%', #{place},'%')) AND category=#{category};
+ 		SELECT * FROM matchboard WHERE (addr LIKE CONCAT('%', #{place},'%') or place LIKE CONCAT('%', #{place},'%')) AND category=#{category} LIMIT 10 OFFSET #{offset};
  	</select>
  	
  	<select id="dateSearch" resultType="com.yw.vo.MatchBoardVo">
- 		SELECT * from matchboard WHERE <![CDATA[ matchdate >= #{day1} AND matchdate <= #{day2} ]]> AND category=#{category};
+ 		SELECT * from matchboard WHERE <![CDATA[ matchdate >= #{day1} AND matchdate <= #{day2} ]]> AND category=#{category} LIMIT 10 OFFSET #{offset};
  	</select>
+ 	
+ 	<select id="sortDate" resultType="com.yw.vo.MatchBoardVo">
+ 		SELECT * FROM matchboard WHERE category=#{category} ORDER BY matchdate LIMIT 10 OFFSET #{offset};
+ 	</select>
+ 	
+ 	<select id="matchListById" resultType="com.yw.vo.MatchBoardVo">
+ 		SELECT * FROM matchboard;
+ 	</select>
+ 	
+ 	<update id="matchDateOver">
+ 		UPDATE matchboard SET state='기간만료' WHERE <![CDATA[matchdate<current_date()]]>;
+ 	</update>
  </mapper>

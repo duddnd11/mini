@@ -1,5 +1,9 @@
 @charset "EUC-KR";
 
+html, body{
+	height: 100%;
+}
+
 .match {
 	height: 90px;
 }
@@ -19,7 +23,7 @@
 
 .right-box {
 	display: inline-block;
-	border-radius: 6px;
+	/**border-radius: 6px;**/
 	margin-left: 20px;
 }
 
@@ -79,8 +83,48 @@
 #placeSearch,#teamSearch{
 	display: none;
 	margin-bottom: 15px;
+	position: sticky;
+	top:100px;
+	width:870px;
+	z-index :10;
+	padding-right: 76px;
 }
 	
 #sort{
-	margin-bottom: 15px;
+	padding-bottom: 15px;
+	padding-top :20px;
+	font-weight: 600;
+	position: sticky;
+	top:100px;
+	background-color: white;
+	width: 100%;
+	border-bottom: 1px solid #eee;
+	width:870px;
+	z-index :10;
+	height: 55px;
 }
+
+#sort:hover{
+	cursor: pointer;
+}
+#map{
+	margin-top: 20px;
+}
+#listBox{
+	padding-top:20px;	
+}
+textarea {
+	resize: none;
+}
+#searchInput{
+	position: sticky;
+	top:100px;
+	margin-top: 14px;
+}
+
+
+
+
+
+
+

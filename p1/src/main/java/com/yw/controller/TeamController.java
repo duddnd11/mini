@@ -2,6 +2,7 @@ package com.yw.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,14 +32,15 @@ public class TeamController {
 			model.addAttribute("name", name);
 		}
 		model.addAttribute("teamList",teamList);
+		model.addAttribute("category","팀");
 		return "team";
 	}
-	@RequestMapping(value="createTeam")
+	@RequestMapping(value="newTeam")
 	public String createTeam() {
 		return "createTeam";
 	}
 	
-	@RequestMapping(value="createTeamAction", method=RequestMethod.POST)
+	@RequestMapping(value="newTeamAction", method=RequestMethod.POST)
 	public String createTeamAction(TeamVo vo,HttpSession session) throws IllegalStateException, IOException {
 		String filePath = session.getServletContext().getRealPath("/resources/img");
 		MultipartFile multipart = vo.getMultipart();
@@ -59,7 +61,22 @@ public class TeamController {
 		service.createTeamService(vo);
 		return "redirect:/team";
 	}
+	
+	@RequestMapping(value="teamDetail")
+	public String teamDetail(Model model,int teamno,Principal principal) {
+		TeamVo teamDetail=service.teamDetailService(teamno);
+		model.addAttribute("teamDetail", teamDetail);
+		int checkApply=0;
+		if(principal!=null) {
+			String id=principal.getName();
+			checkApply=service.checkApplyService(id, teamno);
+		}
+		model.addAttribute("checkApply", checkApply);
+		return "teamDetail";
+	}
 }
+
+
 
 
 

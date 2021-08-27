@@ -7,7 +7,7 @@ public class MatchBoardVo {
 	private String time;
 	private String addr;
 	private String place;
-	private String cost;
+	private int cost;
 	private String rule;
 	private String contents;
 	private int hitcount;
@@ -20,7 +20,7 @@ public class MatchBoardVo {
 	
 	public MatchBoardVo() {};
 
-	public MatchBoardVo(int mbno, String title, String date, String time,String addr, String place, String cost, String rule,
+	public MatchBoardVo(int mbno, String title, String date, String time,String addr, String place, int cost, String rule,
 			String contents, int hitcount, String state, String category,String skill,String id) {
 		super();
 		this.mbno = mbno;
@@ -111,11 +111,11 @@ public class MatchBoardVo {
 		this.addr = addr;
 	}
 
-	public String getCost() {
+	public int getCost() {
 		return cost;
 	}
 
-	public void setCost(String cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 

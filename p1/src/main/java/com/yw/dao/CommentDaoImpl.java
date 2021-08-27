@@ -14,14 +14,14 @@ public class CommentDaoImpl implements CommentDao{
 	SqlSession sqlSession;
 	
 	@Override
-	public void writeComment(int mbno, String comment, String id, int level,int ref) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("mbno", mbno);
-		map.put("comment", comment);
-		map.put("id", id);
-		map.put("level", level);
-		map.put("ref",ref);
-		sqlSession.insert("com.yw.mapper.CommentMapper.writeComment",map );
+	public void writeComment(CommentVo vo) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("mbno", mbno);
+//		map.put("comment", comment);
+//		map.put("id", id);
+//		map.put("level", level);
+//		map.put("ref",ref);
+		sqlSession.insert("com.yw.mapper.CommentMapper.writeComment",vo);
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class CommentDaoImpl implements CommentDao{
 	}
 
 	@Override
-	public CommentVo topComment() {
-		return sqlSession.selectOne("com.yw.mapper.CommentMapper.topComment");
+	public CommentVo selectComment(int cno) {
+		return sqlSession.selectOne("com.yw.mapper.CommentMapper.selectComment",cno);
 	}
 
 	@Override

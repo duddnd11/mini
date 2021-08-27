@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.yw.mapper.BlackListMapper">
+ 	<select id="blackList" resultType="com.yw.vo.BlackListVo">
+ 		SELECT no,title,target,content,writer,hitcount,date_format(date, '%Y-%m-%d') as date FROM blacklist ORDER BY no DESC;
+ 	</select>
+ 	<select id="blackListPage" resultType="com.yw.vo.BlackListVo">
+ 		SELECT no,title,target,content,writer,hitcount,date_format(date, '%Y-%m-%d') as date FROM blackList ORDER BY no DESC LIMIT 10 OFFSET #{offset};
+ 	</select>
+ 	<select id="relatedblackList" resultType="com.yw.vo.BlackListVo">
+ 		SELECT no,title,target,content,writer,hitcount,date_format(date, '%Y-%m-%d') as date FROM blackList ORDER BY no DESC LIMIT 5 OFFSET #{offset};
+ 	</select>
+ 	<select id="blackListDetail" resultType="com.yw.vo.BlackListVo">
+ 		SELECT no,title,target,content,writer,hitcount,date_format(date, '%Y-%m-%d %h:%m') as date FROM blackList WHERE no=#{no};
+ 	</select>
+ 	<insert id="blackListWrite" useGeneratedKeys="true" keyProperty="no">
+ 		INSERT INTO blackList(title,target,content,writer) VALUE (#{title},#{target},#{content},#{writer});
+ 	</insert>
+ 	<update id="blackListModify">
+ 		UPDATE blackList SET title=#{title}, content=#{content} WHERE no=#{no};
+ 	</update>
+ 	<delete id="blackListDelete">
+ 		DELETE FROM blackList WHERE no=#{no};
+ 	</delete>
+ 	<update id="updateHitCount">
+ 		UPDATE blackList SET hitcount=hitcount+1 WHERE no=#{no};
+ 	</update>
+ </mapper>

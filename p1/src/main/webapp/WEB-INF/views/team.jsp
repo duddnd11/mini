@@ -42,21 +42,23 @@ $(function(){
 <body>
 	<div>
 		<sec:authorize access="isAuthenticated()">
-			<a href="createTeam"><img src="resources/img/글쓰기.png" id="fixedbtn"></a>
+			<a href="newTeam"><img src="resources/img/글쓰기.png" id="fixedbtn"></a>
 		</sec:authorize>
 		<sec:authorize access="isAnonymous()">
 			<a href="#"  onclick="reject_button()"><img src="resources/img/글쓰기.png" id="fixedbtn"></a>
 		</sec:authorize>
 	</div>
+	<div id="wrapper">
 	<div class="container">
 		<div id="sort">
 			<span id="search">팀 검색</span>
 		</div>
-		<div>
-			<input type="text" id="teamSearch" name="name" value="${name}" placeholder="팀 명 또는 활동주소를 입력해주세요."/>
+		<div id="searchInput">
+			<input type="text" id="teamSearch" name="name"  class="form-control" value="${name}" placeholder="팀 명 또는 활동주소를 입력해주세요."/>
 		</div>
+		<div id="listBox">
 		<c:forEach items="${teamList}" var="teamList">
-			<a href="teamDetail?mbno=${teamList.teamno}">
+			<a href="teamDetail?teamno=${teamList.teamno}">
 				<div class="team">
 					<div class="left-section">
 						<div class="left-box" style="height: 90px;">
@@ -73,6 +75,9 @@ $(function(){
 			</a>
 			<hr>
 		</c:forEach>
+		</div>
+	</div>
+	<%@ include file ="footer.jsp" %>
 	</div>
 </body>
 </html>

@@ -47,6 +47,7 @@
 </script>
 </head>
 <body>
+	<div id="wrapper">
 	<div class="container">
 	<div class="user-body">
 	<h3>팀 등록</h3>
@@ -93,6 +94,8 @@
 		<input type="hidden" name="representative" value="${userId}"/>
 		</form>
 		</div>
+	</div>
+	<%@ include file ="footer.jsp" %>
 	</div>
 </body>
 </html>

@@ -14,8 +14,8 @@ public class CommentServiceImpl implements CommentService{
 	CommentDao dao;
 	
 	@Override
-	public void writeCommentService(int mbno, String comment, String id,int level,int ref) {
-		dao.writeComment(mbno, comment, id,level,ref);
+	public void writeCommentService(CommentVo vo) {
+		dao.writeComment(vo);
 	}
 
 	@Override
@@ -24,8 +24,8 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public CommentVo topCommentService() {
-		return dao.topComment();
+	public CommentVo selectCommentService(int cno) {
+		return dao.selectComment(cno);
 	}
 
 	@Override

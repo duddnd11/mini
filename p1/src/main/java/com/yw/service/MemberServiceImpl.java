@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.yw.dao.MemberDao;
+import com.yw.security.CustomUserDetail;
 import com.yw.vo.MatchBoardVo;
 import com.yw.vo.MemberVo;
 
@@ -54,5 +55,21 @@ public class MemberServiceImpl implements MemberService{
 			vo.setPassword(encodedPassword);
 			dao.userModifyWithPw(vo);
 		}
+	}
+
+	@Override
+	public List<CustomUserDetail> findIdService(String name, String phoneNum) {
+		return dao.findId(name, phoneNum);
+	}
+
+	@Override
+	public int findPwService(String id, String phoneNum, String email) {
+		return dao.findPw(id, phoneNum, email);
+	}
+
+	@Override
+	public void newPwService(String id, String password) {
+		password=bCryptPasswordEncoder.encode(password);
+		dao.newPw(id, password);
 	}
 }

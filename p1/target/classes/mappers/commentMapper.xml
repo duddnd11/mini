@@ -4,14 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.yw.mapper.CommentMapper">
- 	<insert id="writeComment">
+ 	<insert id="writeComment" useGeneratedKeys="true" keyProperty="cno">
  		INSERT INTO comment(mbno,comment,id,level,ref) VALUES(#{mbno},#{comment},#{id},#{level},#{ref});
  	</insert>
  	<select id="commentList" resultType="com.yw.vo.CommentVo">
- 		SELECT * FROM comment WHERE mbno=#{mbno};
+ 		SELECT cno,mbno,comment,id,ref,level,date_format(date,'%Y-%m-%d %h:%m') as date FROM comment WHERE mbno=#{mbno};
  	</select>
- 	<select id="topComment" resultType="com.yw.vo.CommentVo">
- 		SELECT * FROM comment ORDER BY cno DESC LIMIT 1;
+ 	<select id="selectComment" resultType="com.yw.vo.CommentVo">
+ 		SELECT cno,mbno,comment,id,ref,level,date_format(date,'%Y-%m-%d %h:%m') as date FROM comment WHERE cno=#{cno};
  	</select>
  	<update id="updateRef">
  		UPDATE comment SET ref=#{cno} WHERE cno=#{cno};

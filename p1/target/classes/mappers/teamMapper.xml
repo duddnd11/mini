@@ -13,4 +13,13 @@
  	<select id="teamSearch" resultType="com.yw.vo.TeamVo">
  		SELECT * FROM team WHERE name LIKE CONCAT('%', #{name},'%') OR addr LIKE CONCAT('%', #{name},'%');
  	</select>
+ 	<select id="teamDetail" resultType="com.yw.vo.TeamVo">
+ 		SELECT * FROM team WHERE teamno=#{teamno};
+ 	</select>
+ 	<insert id="teamApply">
+ 		INSERT INTO teamapply(teamno,id,comment) VALUES(#{teamno},#{id},#{comment});
+ 	</insert>
+ 	<select id="checkApply" resultType="int">
+ 		SELECT count(*) FROM teamapply WHERE id=#{id} AND teamno=#{teamno};
+ 	</select>
  </mapper>

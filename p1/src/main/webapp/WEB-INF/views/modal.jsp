@@ -26,7 +26,9 @@
 <script type="text/javascript">
 var today = new Date(); // 오늘 날짜
 var date = new Date();
-
+var lastDate;
+var newMatchDate;
+var searchDate;
 
 function prevCalendar() {
 	today = new Date(today.getFullYear(), today.getMonth() - 1, today
@@ -41,7 +43,7 @@ function nextCalendar() {
 
 function buildCalendar() {
 	var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);// 이번달 첫째 날
-	var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);// 이번달 마지막 날
+	lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);// 이번달 마지막 날
 	var tbCalendar = document.getElementById("calendar"); // 테이블 변수
 	var tbCalendarYM = document.getElementById("tbCalendarYM"); // 날짜 변수  년,월,일
 	tbCalendarYM.innerHTML = today.getFullYear() + "년 "
@@ -65,18 +67,17 @@ function buildCalendar() {
 		cell.setAttribute("class","dayTd");
 		cnt = cnt + 1;
 	}
-
 	for (i = 1; i <= lastDate.getDate(); i++) {
 		cell = row.insertCell(); // 열 한칸한칸 만들어 줌
 		cell.setAttribute("class","dayTd");
-		cell.innerHTML = "<span id='day"+i+"' class='day'>" + i + "</span>";
+		cell.innerHTML = "<div><span id='day"+i+"' class='day'>" + i + "</span></div>";
 		cnt = cnt + 1;
 		if (cnt % 7 == 1) {// 일요일
-			cell.innerHTML = "<span id='day"+i+"' class='day'><font color=#F79DC2>" + i + "</font></span>";
+			cell.innerHTML = "<div><span id='day"+i+"' class='day'><font color=#F79DC2>" + i + "</font></span></div>";
 		}
 		if (cnt % 7 == 0) {/* 1주일이 7일 이므로 토요일 구하기*/
 			//월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-			cell.innerHTML = "<span id='day"+i+"' class='day'><font color=skyblue>" + i + "</font></span>";
+			cell.innerHTML = "<div><span id='day"+i+"' class='day'><font color=skyblue>" + i + "</font></span></div>";
 			//7번째의 cell에만 색칠
 			row = calendar.insertRow();
 			//토요일 다음에 올 셀을 추가
@@ -88,6 +89,40 @@ function buildCalendar() {
 			cell.bgColor = "#FAF58C";//셀의 배경색을 노랑으로 
 		}
 	}
+
+	if(searchDate==1){
+		if(today.getMonth()+1 == month1 && today.getMonth()+1 == month2){
+			$("#"+day1Id).attr("class","clicked");
+			$("#"+day2Id).attr("class","clicked");
+			
+			$("#day"+date1).parent().addClass("startTerm");			
+			for(var i=Number(date1)+1; i<date2 ;i++){
+				$("#day"+i).parent().addClass("term");			
+			}
+			$("#day"+date2).parent().addClass("endTerm");
+		}else if(today.getMonth()+1 == month1){
+			$("#"+day1Id).attr("class","clicked");
+			
+			$("#day"+date1).parent().addClass("startTerm");			
+			for(var i =Number(date1)+1;i<=lastDate.getDate();i++){
+				$("#day"+i).parent().addClass("term");
+			}
+		}else if(today.getMonth()+1 == month2){
+			$("#"+day2Id).attr("class","clicked");
+			for(var i =1;i<Number(date2);i++){
+				$("#day"+i).parent().addClass("term");
+			}
+			$("#day"+date2).parent().addClass("endTerm");
+		}else if(month1<today.getMonth()+1 && today.getMonth()+1<month2){
+			for(var i =1;i<=lastDate.getDate();i++){
+				$("#day"+i).parent().addClass("term");
+			}
+		}
+	}
+
+	if(newMatchDate==1 && today.getMonth()+1 == newMatchMonth){
+		$("#"+clickedDay).addClass("clicked");
+	}
 }
 </script>
 
@@ -96,9 +131,10 @@ function buildCalendar() {
 	width: 100%;
 	height: 395px;
 }
-td:hover > .day {
+td:hover > div > .day{
 	background-color: black;
 	color: white;
+	cursor: pointer;
 }
 td{
 	text-align: center;
@@ -115,15 +151,25 @@ td{
 	background-color: black;
 	color: white;
 }
+.pointer{
+	cursor: pointer;
+	font-size: 50px;
+}
+#calendarHead{
+	height: 0px
+}
+#tbCalendarYM{
+	font-size: 25px;
+}
 </style>
 </head>
 <body>
 	<table id="calendar">
-		<tr>
+		<tr id="calendarHead">
 			<!-- label은 마우스로 클릭을 편하게 해줌 -->
-			<td><label onclick="prevCalendar()" style="float: left;"> < </label></td>
-			<td align="center" id="tbCalendarYM" colspan="5">yyyy년 m월</td>
-			<td><label onclick="nextCalendar()" style="float: right;"> > </label></td>
+			<td><label class="pointer" onclick="prevCalendar()" style="float: left;"> < </label></td>
+			<td align="center" id="tbCalendarYM" colspan="5">yyyy년 mm월</td>
+			<td><label class="pointer" onclick="nextCalendar()" style="float: right;"> > </label></td>
 		</tr>
 		<tr>
 			<td align="center"><font color="#F79DC2">일</font></td>

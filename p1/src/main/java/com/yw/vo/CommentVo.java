@@ -22,6 +22,14 @@ public class CommentVo {
 		this.step = step;
 		this.date = date;
 	}
+	public CommentVo(int mbno, String comment, String id, int ref, int level) {
+		super();
+		this.mbno = mbno;
+		this.comment = comment;
+		this.id = id;
+		this.ref = ref;
+		this.level = level;
+	}
 	
 	public int getCno() {
 		return cno;

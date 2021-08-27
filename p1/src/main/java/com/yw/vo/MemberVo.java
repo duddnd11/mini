@@ -14,10 +14,11 @@ public class MemberVo {
 	private String phoneNum;
 	private String img;
 	private MultipartFile multipart;
+	private String date;
 	
 	public MemberVo() {}
 	public MemberVo(String id, String name, String password, String auth, int enabled, String email, String gender,
-			String birth, String phoneNum,String img) {
+			String birth, String phoneNum,String img,String date) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,8 +30,15 @@ public class MemberVo {
 		this.birth = birth;
 		this.phoneNum = phoneNum;
 		this.img = img;
+		this.date =date;
 	}
 	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public MultipartFile getMultipart() {
 		return multipart;
 	}

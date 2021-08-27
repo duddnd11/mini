@@ -31,7 +31,7 @@
  	<resultMap type="com.yw.vo.MatchBoardVo" id="MatchBoardVo">
  		<result column="mbno" property="mbno"/>
  		<result column="title" property="title"/>
- 		<result column="date" property="date"/>
+ 		<result column="matchdate" property="date"/>
  		<result column="time" property="time"/>
  		<result column="addr" property="addr"/>
  		<result column="place" property="place"/>
@@ -55,11 +55,28 @@
  	</select>
  	
  	<update id="userModify" >
- 		UPDATE member SET name=#{name},email=#{email},gender=#{gender},birth=#{birth},phoneNum=#{phoneNum} WHERE id=#{id};
+ 		UPDATE member SET name=#{name},email=#{email},gender=#{gender},birth=#{birth},phoneNum=#{phoneNum},img=#{img} WHERE id=#{id};
  	</update>
+ 	
  	<update id="userModifyWithPw" >
- 		UPDATE member SET name=#{name},password=#{password},email=#{email},gender=#{gender},birth=#{birth},phoneNum=#{phoneNum} WHERE id=#{id};
+ 		UPDATE member SET name=#{name},password=#{password},email=#{email},gender=#{gender},birth=#{birth},phoneNum=#{phoneNum},img=#{img} WHERE id=#{id};
  	</update>
+ 	
+ 	<select id="findId" resultType="com.yw.security.CustomUserDetail">
+ 		SELECT id,date_format(date, '%Y-%m-%d') as date FROM member WHERE name=#{name} AND phoneNum=#{phoneNum};
+ 	</select>
+ 	
+ 	<select id="findPw" resultType="int">
+ 		SELECT count(*) FROM member WHERE id=#{id} AND phoneNum=#{phoneNum} AND email=#{email};
+ 	</select>
+ 	
+ 	<update id="newPw">
+		UPDATE member SET password=#{password} WHERE id=#{id}; 	
+ 	</update>
+ 	
+ 	<select id="memberList" resultType="com.yw.security.CustomUserDetail">
+ 		SELECT * FROM member;
+ 	</select>
  </mapper>
  
  

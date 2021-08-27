@@ -3,4 +3,19 @@
 .container{
 	width:900px;
 	margin:0 auto;
+	/*margin-top:20px;*/
+	padding-top:100px;
+}
+
+.content{
+		width: 100%;
+}
+.content-body{
+		margin-top: 10px;
+}
+
+#wrapper{
+	min-height :100%;
+	padding-bottom :340px;
+	position: relative;
 }

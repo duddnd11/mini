@@ -9,6 +9,11 @@
 <title>메인페이지</title>
 </head>
 <body>
-	
+<div id="wrapper">
+	<div class="container">
+
+	</div>
+	<%@ include file ="footer.jsp" %>
+	</div>
 </body>
 </html>

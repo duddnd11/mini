@@ -1,59 +1,239 @@
-@charset "EUC-KR";
+@charset "UTF-8";
 
-.userContainer{
-	width : 900px;
-	margin : 0 auto;
+.userContainer {
+	width: 900px;
+	margin: 0 auto;
+	margin-top: 20px;
+	padding-top: 100px;
 }
-.user-body{
+
+.user-body {
 	width: 500px;
-	margin:0 auto;
+	margin: 0 auto;
 }
-input{
-	font-size:16px;
+
+input {
+	font-size: 16px;
 	width: 100%;
-    height: 45px;
+	height: 45px;
 }
-h3{
-	margin-bottom:40px;
+
+h3 {
+	margin-bottom: 40px;
+	font-weight: 550;
 }
+h4{
+	font-weight: 550;
+}
+
 textarea {
-	width:300px;
-	height:175px;	
+	width: 300px;
+	height: 175px;
 }
 
 .modal {
-        text-align: center;
+	text-align: center;
 }
- 
-@media screen and (min-width: 768px) { 
-        .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-        }
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
 }
- 
+
 .modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
-#placeModal-dialog{
+
+#placeModal-dialog {
 	width: 1024px;
-    height: 800px;
+	height: 800px;
 }
-.gender{
-		width:100%;
-		height:45px;
+
+.gender {
+	width: 100%;
+	height: 45px;
 }
-#preImage{
+
+#preImage {
 	width: 100%;
 	height: 100%;
-	border-radius :50%;
+	border-radius: 50%;
 }
-#preImageDiv{
+
+#preImageDiv {
 	width: 193px;
 	height: 192px;
 	margin: 0 auto;
 }
+
+.findId, .findPw {
+	width: 248px;
+}
+
+.find {
+	margin-top: 7px;
+}
+
+.notice-date {
+	color: #888888;
+	display: inline-block;	
+}
+
+.notice-title {
+	font-size: 16px;
+}
+
+input[type=checkbox] {
+	width: 15px;
+	height: 15px;
+}
+
+.main-notice-body {
+	background-color: #f0f0f7;
+	border-bottom: 1px solid #eee;
+}
+.notice-body{
+	border-bottom: 1px solid #eee;
+}
+.notice-header{
+	border-bottom: 1px solid #eee;
+}
+.target{
+}
+.hitCount{
+	margin-left:8px;
+	display: inline-block;	
+}
+.like-box{
+	display: inline-block;	
+	float: right;
+	font-size: 17px;
+}
+.table_name {
+	font-weight: 550;
+	font-size: 24px;
+	color: black;
+}
+
+.foldBtn {
+	width: 50px;
+	height: 21px;
+	background-size: 100%;
+	display: inline-block;
+	margin-left: 8px;
+}
+
+.unfold {
+	background-image: url('../resources/img/접기2.png');
+}
+
+.fold {
+	background-image: url('../resources/img/펼치기2.png');
+}
+
+.noticedetail-title {
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.noticedetail-content {
+	margin-top: 45px;
+}
+
+.box {
+	border: 1px solid #eee;
+	padding: 30px 30px;
+}
+
+.btns {
+	padding: 0 0 10px;
+	height: 44px;
+}
+
+.menu {
+	float: right;
+}
+
+.notice_nav>a {
+	display: block;
+}
+
+.nav_btn {
+	margin-right: 20px;
+	margin-left: 7px;
+}
+
+.notice_nav {
+	padding: 30px 30px;
+}
+
+.noticeAll {
+	float: right;
+}
+
+.noticeAllBox {
+	margin-top: 8px;
+}
+
+.relate>h4 {
+	font-weight: 500;
+	margin-bottom: 15px;
+}
+
+.prevBtn {
+	border-bottom: 1px solid #eee;
+}
+
+.nowPage {
+	font-weight: bold;
+	background: #333;
+}
+
+.page {
+	font-size: 15px;
+	margin-top: 22px;
+	text-align: center;
+}
+
+.page_wrap>a {
+	width: 23px;
+	height: 23px;
+	display: inline-block;
+	border: 1px solid #ddd;
+	float: left;
+}
+
+.page_wrap>span>a {
+	width: 34px;
+	height: 23px;
+	display: inline-block;
+	border: 1px solid #ddd;
+	float: left;
+}
+
+.page_wrap {
+	display: inline-block;
+}
+
+.targetDiv{
+	margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

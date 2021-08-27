@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- DataSource : DB와의 연결을 담당.-->
@@ -26,13 +28,16 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	
-	
 	<bean id="memberDao" class="com.yw.dao.MemberDaoImpl"/>
 	<bean id="teamDao" class="com.yw.dao.TeamDaoImpl"/>
 	<bean id="matchDao" class="com.yw.dao.MatchDaoImpl"/>
 	<bean id="applyDao" class="com.yw.dao.ApplyDaoImpl"/>
 	<bean id="commentDao" class="com.yw.dao.CommentDaoImpl"/>
-	<context:component-scan base-package="com.yw.service"/>
+	<bean id="noticeDao" class="com.yw.dao.NoticeDaoImpl"/>
+	<bean id="blackListDao" class="com.yw.dao.BlackListDaoImpl"/>
+	<bean id="likeDao" class="com.yw.dao.LikeDaoImpl"/>
 	
+	<context:component-scan base-package="com.yw.service"/>
+	<context:component-scan base-package="com.yw.job"/>
+	<task:annotation-driven/>
 </beans>

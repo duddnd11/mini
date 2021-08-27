@@ -1,5 +1,7 @@
 package com.yw.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,5 +20,9 @@ public class CustomUserDetailService implements UserDetailsService {
 			throw new UsernameNotFoundException("username"+username+"not found");
 		}
 		return users;
+	}
+	
+	public List<CustomUserDetail> memberListService(){
+		return memberDao.memberList();
 	}
 }

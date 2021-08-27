@@ -5,8 +5,8 @@ import java.util.List;
 import com.yw.vo.CommentVo;
 
 public interface CommentService {
-	public void writeCommentService(int mbno,String comment, String id,int level,int ref);
+	public void writeCommentService(CommentVo vo);
 	public List<CommentVo> commentListService(int mbno);
-	public CommentVo topCommentService();
+	public CommentVo selectCommentService(int cno);
 	public void updateRefService(int cno);
 }

@@ -7,6 +7,8 @@ public class ApplyVo {
 	private String state;
 	private String teamname;
 	
+	private MemberVo memberVo;
+	
 	public ApplyVo() {}
 	public ApplyVo(int applyno, int mbno, String id, String state, String teamname) {
 		super();
@@ -46,7 +48,11 @@ public class ApplyVo {
 	public void setTeamname(String teamname) {
 		this.teamname = teamname;
 	}
-	
-	
+	public MemberVo getMemberVo() {
+		return memberVo;
+	}
+	public void setMemberVo(MemberVo memberVo) {
+		this.memberVo = memberVo;
+	}
 	
 }

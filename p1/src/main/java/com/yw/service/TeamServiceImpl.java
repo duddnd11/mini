@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yw.dao.TeamDao;
+import com.yw.vo.TeamApplyVo;
 import com.yw.vo.TeamVo;
 
 @Service
@@ -28,4 +29,18 @@ public class TeamServiceImpl implements TeamService{
 		return dao.teamSearch(name);
 	}
 
+	@Override
+	public TeamVo teamDetailService(int teamno) {
+		return dao.teamDetail(teamno);
+	}
+
+	@Override
+	public void teamApplyService(TeamApplyVo vo) {
+		dao.teamApply(vo);
+	}
+
+	@Override
+	public int checkApplyService(String id, int teamno) {
+		return dao.checkApply(id, teamno);
+	}
 }

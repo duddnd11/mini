@@ -20,6 +20,7 @@ public class CustomUserDetail implements UserDetails {
 	private String phoneNum;
 	private String img;
 	private MultipartFile multipart;
+	private String date;
 	
 	
 	@Override
@@ -27,6 +28,13 @@ public class CustomUserDetail implements UserDetails {
 		ArrayList<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(auth));
 		return authList;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public String getImg() {
 		return img;

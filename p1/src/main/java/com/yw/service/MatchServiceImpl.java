@@ -19,8 +19,8 @@ public class MatchServiceImpl implements MatchService{
 	}
 
 	@Override
-	public List<MatchBoardVo> matchListService(String category) {
-		return dao.matchList(category);
+	public List<MatchBoardVo> matchListService(String category,String kinds,String place,String day1,String day2,int offset) {
+		return dao.matchList(category,kinds,place,day1,day2,offset);
 	}
 
 	@Override
@@ -34,12 +34,22 @@ public class MatchServiceImpl implements MatchService{
 	}
 
 	@Override
-	public List<MatchBoardVo> placeSearchService(String category, String place) {
-		return dao.placeSearch(category, place);
+	public List<MatchBoardVo> placeSearchService(String category, String place,int offset) {
+		return dao.placeSearch(category, place,offset);
 	}
 
 	@Override
-	public List<MatchBoardVo> dateSearchService(String category, String day1, String day2) {
-		return dao.dateSearch(category, day1, day2);
+	public List<MatchBoardVo> dateSearchService(String category, String day1, String day2,int offset) {
+		return dao.dateSearch(category, day1, day2,offset);
+	}
+
+	@Override
+	public List<MatchBoardVo> sortDateService(String category,int offset) {
+		return dao.sortDate(category,offset);
+	}
+
+	@Override
+	public List<MatchBoardVo> matchListByIdService() {
+		return dao.matchListById();
 	}
 }
